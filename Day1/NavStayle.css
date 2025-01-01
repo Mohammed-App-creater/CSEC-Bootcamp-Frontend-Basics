@@ -159,6 +159,12 @@ body {
   margin-top: 10px;
 }
 
+.discraption p{
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+}
+
 .grid-item button{
     display: flex;
     justify-content: center;
@@ -197,6 +203,11 @@ body {
   border: 1px solid #ccc;
   background-color: #efedea;
   padding-top: 2px;
+  transform: scale(1.5);
+}
+
+.meanu-icon img{
+ display: none;
 }
 
 .Fevaerite img{
@@ -209,26 +220,60 @@ body {
 }
 
 @media (max-width: 768px) {
-  .navbar {
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
+  
 
   .nav-links {
     order: 2;
-    justify-content: space-around;
+    justify-content: center;
     flex-grow: unset;
     width: 100%;
     margin: 0.5rem 0;
   }
 
+  .grid-container {
+    width: 100%;
+    padding: 0.5rem 2rem;
+  }
+
   .search-bar {
     order: 3;
-    width: 100%;
+    width: 50%;
     justify-content: center;
   }
 
   .search-bar input {
     width: 70%;
+  }
+
+  .user-icon {
+    order: 3;
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 377px){
+  .grid-container {
+    padding: 0.5rem 0.5rem;
+  }
+  .search-bar {
+    display: none;
+  }
+  .navbar {
+   width: 100%; 
+   justify-content: space-between;
+  }
+  .nav-links {
+    display: none;
+  }
+
+  .meanu-icon img{
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+  }
+
+  .user-icon {
+    display: none;
   }
 }
