@@ -1,0 +1,61 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: #051049;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    gap: 40px;
+    color: #fff;
+}
+
+.TheContener{
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.theDiv{
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-direction: column;
+}
+
+ p {
+    font-size: 35px;
+    font-weight: 800;
+    text-wrap: wrap;
+
+}
+
+button{
+    padding: 10px 20px;
+    background-color: #051049;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 600;
+    transition: 0.7s;
+    border: #fff 1px solid;
+}
+
+button:hover{
+    background-color: #fff;
+    color: #051049;
+}
