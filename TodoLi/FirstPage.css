@@ -2,8 +2,24 @@
   --primary-color: #f3f3f3;
   --primary: #6c63ff;
   --primary-hover: #534cc2;
+  --primary-border: #6c63ff;
+  --color: #000;
+  --Background: #fff;
+  --PopupBackground: rgba(0, 0, 0, 0.687);
   --secondary-color: #333;
   --placeholder: #c3c1e5;
+}
+
+.dark-mode {
+  --primary-color: #fff;
+  --primary: #6c63ff;
+  --primary-hover: #534cc2;
+  --primary-border: #fff;
+  --color: #fff;
+  --Background: #1e1f20;
+  --PopupBackground: rgba(0, 0, 0, 0);
+  --secondary-color: #f3f3f3;
+  --placeholder: #666666;
 }
 
 * {
@@ -12,12 +28,15 @@
   box-sizing: border-box;
 }
 
+
+
 body {
   font-family: "Poppins", sans-serif;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--Background);
 }
 
 .container {
@@ -33,7 +52,10 @@ body {
 
 .header {
   margin-bottom: 40px;
+  color: var(--color);
 }
+
+
 
 .search {
   width: 100%;
@@ -42,12 +64,30 @@ body {
   margin-bottom: 40px;
 }
 
+.search-bar{
+  width: 90%;
+  max-width: 595px;
+  height: fit-content;
+  position: relative;
+}
+
+.search-bar svg {
+  position: absolute;
+  right: 2.5%;
+  top: 25%;
+}
+
+.search-bar svg path {
+  fill: var(--primary-border);
+}
+
+
 .search input {
   width: 100%;
-  max-width: 595px;
   padding: 10px;
   border: none;
-  border: 1.5px solid var(--primary);
+  background-color: var(--Background);
+  border: 1.5px solid var(--primary-border);
   border-radius: 5px;
   outline: none;
   font-size: 1.2rem;
@@ -159,6 +199,7 @@ body {
   flex-direction: column;
   gap: 30px;
   text-align: center;
+  color: var(--color);
 }
 
 .add-btn {
@@ -215,4 +256,112 @@ body {
 
 .list-menu-btn:last-child svg:hover path {
   stroke: red;
+}
+
+.note-popup{
+  width: 100%;
+  height: 100%;
+  background: var(--PopupBackground);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  z-index: 100;
+}
+
+.note-popup-content{
+  width: 100%;
+  max-width: 500px;
+  padding: 20px 30px;
+  margin-top: 150px;
+  background: var(--Background);
+  border: 1px solid #F7F7F7;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.note-popup-header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color);
+}
+
+.note-popup-body{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.note-popup-body input{
+  width: 99%;
+  padding: 10px;
+  background-color: var(--Background);
+  border: none;
+  border: 1.5px solid var(--primary-border);
+  border-radius: 5px;
+  outline: none;
+  font-size: 1.2rem;
+  margin-bottom: 80px;
+}
+
+
+
+/* .note-popup-body textarea{
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border: 1.5px solid var(--primary);
+  border-radius: 5px;
+  outline: none;
+  font-size: 1.2rem;
+  resize: none;
+  height: 100px;
+} */
+
+.note-popup-body input::placeholder{
+  color: var(--placeholder);
+  font-size: 16px;
+}
+  
+
+.note-popup-footer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.note-popup-footer button{
+  padding: 9px 20px;
+  border: none;
+  background: var(--primary);
+  color: var(--primary-color);
+  border-radius: 5px;
+  outline: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.close-btn{
+  background: var(--Background) !important;
+  border:  1.5px solid var(--primary) !important;
+  color: var(--primary) !important;
+}
+
+.close-btn:hover{
+  background: var(--primary) !important;
+  color: var(--primary-color) !important;
+}
+
+.add-note-btn:hover{
+  background: var(--primary-hover);
+}
+
+
+.hide {
+  display: none !important;
 }
