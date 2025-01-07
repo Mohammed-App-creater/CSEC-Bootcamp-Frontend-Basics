@@ -1,0 +1,218 @@
+:root {
+  --primary-color: #f3f3f3;
+  --primary: #6c63ff;
+  --primary-hover: #534cc2;
+  --secondary-color: #333;
+  --placeholder: #c3c1e5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 840px;
+  height: 100%;
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.header {
+  margin-bottom: 40px;
+}
+
+.search {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.search input {
+  width: 100%;
+  max-width: 595px;
+  padding: 10px;
+  border: none;
+  border: 1.5px solid var(--primary);
+  border-radius: 5px;
+  outline: none;
+  font-size: 1.2rem;
+}
+
+.search input::placeholder {
+  color: var(--placeholder);
+  font-size: 16px;
+}
+
+#filter {
+  max-width: 95px;
+  padding: 12px 0;
+  text-align: center;
+  border: none;
+  background: var(--primary);
+  color: var(--primary-color);
+  border-radius: 5px;
+  outline: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+#filter:hover {
+  background: var(--primary-hover);
+}
+
+#filter option {
+  background: #fff;
+  color: var(--primary);
+  padding: 0 important;
+}
+
+#mode {
+  width: 45px;
+  background: var(--primary);
+  border: none;
+  border-radius: 5px;
+}
+
+#mode:hover {
+  background: var(--primary-hover);
+}
+
+#mode svg {
+  width: 60%;
+  height: 100%;
+  fill: var(--primary-color);
+}
+
+.lists {
+  width: 100%;
+  max-width: 600px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+#list {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.list-item {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 0;
+  color: var(--secondary-color);
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--primary);
+  position: relative;
+}
+
+#list .list-item:last-child {
+  border-bottom: none;
+}
+
+.list-item button {
+  width: 26px;
+  height: 26px;
+  background: transparent;
+  border: 1px solid var(--primary);
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+}
+
+.checked {
+  color: var(--primary-color) !important;
+  background-color: var(--primary) !important;
+  font-size: large;
+}
+
+.detective {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+  text-align: center;
+}
+
+.add-btn {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  background: var(--primary);
+  border-radius: 100%;
+  color: var(--primary-color);
+  font-size: 45px;
+  position: absolute;
+  bottom: 40px;
+  right: 45px;
+}
+
+.add-btn:hover {
+  background: var(--primary-hover);
+  cursor: pointer;
+}
+
+.menu-group {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  right: -40px;
+  top: 0;
+}
+
+.list-menu-btn {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none !important;
+  cursor: pointer;
+}
+
+.list-menu-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--primary-color);
+}
+
+.list-menu-btn:first-child svg:hover path {
+  stroke: var(--primary);
+}
+
+.list-menu-btn:last-child svg:hover path {
+  stroke: red;
+}
