@@ -1,5 +1,6 @@
 :root {
   --primary-color: #f3f3f3;
+  --checked-color: #fff;
   --primary: #6c63ff;
   --primary-hover: #534cc2;
   --primary-border: #6c63ff;
@@ -15,6 +16,7 @@
   --primary: #6c63ff;
   --primary-hover: #534cc2;
   --primary-border: #fff;
+  --checked-color: #1e1f20;
   --color: #fff;
   --Background: #1e1f20;
   --PopupBackground: rgba(0, 0, 0, 0);
@@ -27,8 +29,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-
 
 body {
   font-family: "Poppins", sans-serif;
@@ -55,8 +55,6 @@ body {
   color: var(--color);
 }
 
-
-
 .search {
   width: 100%;
   display: flex;
@@ -64,7 +62,7 @@ body {
   margin-bottom: 40px;
 }
 
-.search-bar{
+.search-bar {
   width: 90%;
   max-width: 595px;
   height: fit-content;
@@ -80,7 +78,6 @@ body {
 .search-bar svg path {
   fill: var(--primary-border);
 }
-
 
 .search input {
   width: 100%;
@@ -181,12 +178,22 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
+  color: var(--checked-color);
   cursor: pointer;
   position: relative;
 }
 
-.checked {
+.text {
+  width: 100%;
+  max-width: 500px;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  color: var(--color); 
+}
+
+
+.checkbox.checked {
   color: var(--primary-color) !important;
   background-color: var(--primary) !important;
   font-size: large;
@@ -234,7 +241,8 @@ body {
   top: 0;
 }
 
-.list-menu-btn {
+.list-delete-btn,
+.list-edit-btn {
   width: 50px;
   height: 50px;
   display: flex;
@@ -244,21 +252,22 @@ body {
   cursor: pointer;
 }
 
-.list-menu-btn svg {
+.list-delete-btn svg,
+.list-edit-btn svg {
   width: 20px;
   height: 20px;
   fill: var(--primary-color);
 }
 
-.list-menu-btn:first-child svg:hover path {
+.list-edit-btn:first-child svg:hover path {
   stroke: var(--primary);
 }
 
-.list-menu-btn:last-child svg:hover path {
+.list-delete-btn svg:hover path {
   stroke: red;
 }
 
-.note-popup{
+.note-popup {
   width: 100%;
   height: 100%;
   background: var(--PopupBackground);
@@ -271,33 +280,33 @@ body {
   z-index: 100;
 }
 
-.note-popup-content{
+.note-popup-content {
   width: 100%;
   max-width: 500px;
   padding: 20px 30px;
   margin-top: 150px;
   background: var(--Background);
-  border: 1px solid #F7F7F7;
+  border: 1px solid #f7f7f7;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.note-popup-header{
+.note-popup-header {
   display: flex;
   justify-content: center;
   align-items: center;
   color: var(--color);
 }
 
-.note-popup-body{
+.note-popup-body {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.note-popup-body input{
+.note-popup-body input {
   width: 99%;
   padding: 10px;
   background-color: var(--Background);
@@ -309,33 +318,18 @@ body {
   margin-bottom: 80px;
 }
 
-
-
-/* .note-popup-body textarea{
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border: 1.5px solid var(--primary);
-  border-radius: 5px;
-  outline: none;
-  font-size: 1.2rem;
-  resize: none;
-  height: 100px;
-} */
-
-.note-popup-body input::placeholder{
+.note-popup-body input::placeholder {
   color: var(--placeholder);
   font-size: 16px;
 }
-  
 
-.note-popup-footer{
+.note-popup-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.note-popup-footer button{
+.note-popup-footer button {
   padding: 9px 20px;
   border: none;
   background: var(--primary);
@@ -346,22 +340,26 @@ body {
   cursor: pointer;
 }
 
-.close-btn{
+.close-btn {
   background: var(--Background) !important;
-  border:  1.5px solid var(--primary) !important;
+  border: 1.5px solid var(--primary) !important;
   color: var(--primary) !important;
 }
 
-.close-btn:hover{
+.close-btn:hover {
   background: var(--primary) !important;
   color: var(--primary-color) !important;
 }
 
-.add-note-btn:hover{
+.add-note-btn:hover {
   background: var(--primary-hover);
 }
 
-
 .hide {
   display: none !important;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: gray;
 }

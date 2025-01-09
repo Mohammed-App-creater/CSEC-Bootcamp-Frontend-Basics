@@ -6,7 +6,6 @@ const submitButton = document.getElementById("submit-btn");
 const label1 = document.getElementById("name-label");
 const label2 = document.getElementById("email-label");
 const label3 = document.getElementById("password-label");
-const form = document.getElementById("form");
 
 const validateEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -62,17 +61,15 @@ passwordInput.addEventListener("blur", () => {
   }
 });
 
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const name = nameInput.value;
-  const email = emailInput.value;
-  const password = passwordInput.value;
-  const user = {
-    name,
-    email,
-    password,
-  };
-  localStorage.setItem("user", JSON.stringify(user));
-  window.location.href = "TodoList.html";
+submitButton.addEventListener("click", () => {
+  // const name = nameInput.value;
+  // const email = emailInput.value;
+  // const password = passwordInput.value;
+  // const user = {
+  //   name,
+  //   email,
+  //   password,
+  // };
+  // localStorage.setItem("user", JSON.stringify(user));
+  window.location.href = "../TodoList(CSEC Bootcamp)/FirstPage.html";
 });
