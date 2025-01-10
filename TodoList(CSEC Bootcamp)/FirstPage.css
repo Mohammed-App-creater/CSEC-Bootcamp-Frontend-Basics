@@ -97,7 +97,6 @@ body {
 
 #filter {
   max-width: 95px;
-  padding: 12px 0;
   text-align: center;
   border: none;
   background: var(--primary);
@@ -106,16 +105,33 @@ body {
   outline: none;
   font-size: 1.2rem;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }
 
-#filter:hover {
+.chosed:hover {
   background: var(--primary-hover);
 }
 
-#filter option {
+.chosed {
+  padding: 10px 40px;
+}
+
+.options {
+  border: 1.5px solid var(--primary);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+#filter .option:not(.chosed) {
+  padding: 3px 0;
   background: #fff;
   color: var(--primary);
   padding: 0 important;
+}
+
+#filter .option:not(.chosed):hover {
+  background: #f2f2fa00 !important;
 }
 
 #mode {
@@ -189,9 +205,8 @@ body {
   white-space: normal;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  color: var(--color); 
+  color: var(--color);
 }
-
 
 .checkbox.checked {
   color: var(--primary-color) !important;
