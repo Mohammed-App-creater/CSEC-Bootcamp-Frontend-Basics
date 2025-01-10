@@ -99,9 +99,7 @@ body {
   max-width: 95px;
   text-align: center;
   border: none;
-  background: var(--primary);
   color: var(--primary-color);
-  border-radius: 5px;
   outline: none;
   font-size: 1.2rem;
   cursor: pointer;
@@ -109,12 +107,15 @@ body {
   flex-direction: column;
 }
 
-.chosed:hover {
-  background: var(--primary-hover);
-}
-
 .chosed {
   padding: 10px 40px;
+  background: var(--primary);
+  border-radius: 5px;
+  border: 2px solid var(--primary);
+}
+
+.chosed:hover {
+  background: var(--primary-hover);
 }
 
 .options {
@@ -123,12 +124,18 @@ body {
   overflow: hidden;
 }
 
+.options:hover {
+  background: #6C63FF33 ;
+}
+
 #filter .option:not(.chosed) {
   padding: 3px 0;
   background: #fff;
   color: var(--primary);
   padding: 0 important;
 }
+
+
 
 #filter .option:not(.chosed):hover {
   background: #f2f2fa00 !important;

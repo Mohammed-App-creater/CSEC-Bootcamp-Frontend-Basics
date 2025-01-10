@@ -107,21 +107,26 @@ noteList.addEventListener("click", (event) => {
   }
 });
 
-filter.addEventListener("change", () => {
-  const filterValue = filter.value; 
-  const listItems = noteList.querySelectorAll(".list-item"); 
 
-  listItems.forEach((item) => {
-    const isCompleted = item
-      .querySelector(".checkbox")
-      .classList.contains("checked");
-
-    if (filterValue === "All") {
-      item.style.display = "flex"; 
-    } else if (filterValue === "completed") {
-      item.style.display = isCompleted ? "flex" : "none";  
-    } else if (filterValue === "Incomplete") {
-      item.style.display = isCompleted ? "none" : "flex"; 
-    }
-  });
+filter.addEventListener("click", () =>{
+  
 });
+
+// filter.addEventListener("change", () => {
+//   const filterValue = filter.value; 
+//   const listItems = noteList.querySelectorAll(".list-item"); 
+
+//   listItems.forEach((item) => {
+//     const isCompleted = item
+//       .querySelector(".checkbox")
+//       .classList.contains("checked");
+
+//     if (filterValue === "All") {
+//       item.style.display = "flex"; 
+//     } else if (filterValue === "completed") {
+//       item.style.display = isCompleted ? "flex" : "none";  
+//     } else if (filterValue === "Incomplete") {
+//       item.style.display = isCompleted ? "none" : "flex"; 
+//     }
+//   });
+// });
