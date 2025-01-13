@@ -13,6 +13,7 @@ const visibleIcon = mode.querySelector("svg:not(.hide)");
 const hiddenIcon = mode.querySelector("svg.hide");
 const checkbox = document.querySelectorAll(".checkbox");
 const filter = document.getElementById("filter");
+const optionList = document.getElementById("option-list");
 
 const toggleDetective = () => {
   if (list.children.length === 0) {
@@ -24,17 +25,19 @@ const toggleDetective = () => {
 
 toggleDetective();
 
-closeBtn.addEventListener("click", () => {
-  notePopUp.classList.add("hide");
-});
+const noteLists = [];
 
-applyNote.addEventListener("click", () => {
-  const note = noteInput.value.trim();
-  if (note) {
+const render = () => {
+  if (!(noteList.children.length === 0)) {
+    while (noteList.firstChild) {
+      noteList.removeChild(noteList.firstChild);
+    }
+  }
+  noteLists.map((noteItem) => {
     const listItemHTML = `
           <li class="list-item">
             <button class="checkbox">✓</button>
-            <p class="text">${note}</p>
+            <p class="text">${noteItem.note}</p>
             <div class="menu-group">
               <button class="list-edit-btn">
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -52,7 +55,40 @@ applyNote.addEventListener("click", () => {
               </button>
             </div>
           </li>`;
+    if (noteItem.status === "complete") {
+      const listItem = target.closest(".list-item");
+      if (listItem) {
+        const textElement = listItem.querySelector(".text");
+        textElement.classList.toggle("completed");
+        target.classList.toggle("checked");
+      }
+    }
     noteList.insertAdjacentHTML("beforeend", listItemHTML);
+  });
+};
+
+const addNote = (note) => {
+  noteLists.push({ note: note, status: "incomplete" });
+  render();
+};
+
+const removeNote = (note) => {
+  const index = noteLists.findIndex((item) => item.note === note);
+  if (index !== -1) {
+    noteLists.splice(index, 1); // Remove the object at the found index
+  } else {
+    console.warn("Note not found in the list.");
+  }
+};
+
+closeBtn.addEventListener("click", () => {
+  notePopUp.classList.add("hide");
+});
+
+applyNote.addEventListener("click", () => {
+  const note = noteInput.value.trim();
+  if (note) {
+    addNote(note);
     noteInput.value = "";
     notePopUp.classList.add("hide");
     toggleDetective();
@@ -88,6 +124,12 @@ noteList.addEventListener("click", (event) => {
   if (target.closest(".list-delete-btn")) {
     const listItem = target.closest(".list-item");
     if (listItem) {
+      const textElement = listItem.querySelector(".text");
+      if (textElement) {
+        const textContent = textElement.textContent;
+        removeNote(textContent);
+        console.log(noteLists);
+      }
       listItem.remove();
       toggleDetective();
     }
@@ -107,14 +149,13 @@ noteList.addEventListener("click", (event) => {
   }
 });
 
-
-filter.addEventListener("click", () =>{
-  
+filter.addEventListener("click", () => {
+  optionList.classList.toggle("hide");
 });
 
 // filter.addEventListener("change", () => {
-//   const filterValue = filter.value; 
-//   const listItems = noteList.querySelectorAll(".list-item"); 
+//   const filterValue = filter.value;
+//   const listItems = noteList.querySelectorAll(".list-item");
 
 //   listItems.forEach((item) => {
 //     const isCompleted = item
@@ -122,11 +163,17 @@ filter.addEventListener("click", () =>{
 //       .classList.contains("checked");
 
 //     if (filterValue === "All") {
-//       item.style.display = "flex"; 
+//       item.style.display = "flex";
 //     } else if (filterValue === "completed") {
-//       item.style.display = isCompleted ? "flex" : "none";  
+//       item.style.display = isCompleted ? "flex" : "none";
 //     } else if (filterValue === "Incomplete") {
-//       item.style.display = isCompleted ? "none" : "flex"; 
+//       item.style.display = isCompleted ? "none" : "flex";
 //     }
 //   });
 // });
+
+notePopUp.addEventListener("click", (event) => {
+  if (event.target.classList.contains("note-popup")) {
+    notePopUp.classList.add("hide");
+  }
+});

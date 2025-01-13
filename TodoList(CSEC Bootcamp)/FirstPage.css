@@ -95,6 +95,10 @@ body {
   font-size: 16px;
 }
 
+.sort{
+  position: relative;
+}
+
 #filter {
   max-width: 95px;
   text-align: center;
@@ -106,6 +110,7 @@ body {
   display: flex;
   flex-direction: column;
 }
+
 
 .chosed {
   padding: 10px 40px;
@@ -121,7 +126,10 @@ body {
 .options {
   border: 1.5px solid var(--primary);
   border-radius: 5px;
+  background: #fff;
   overflow: hidden;
+  position: absolute;
+  top: 100%;
 }
 
 .options:hover {

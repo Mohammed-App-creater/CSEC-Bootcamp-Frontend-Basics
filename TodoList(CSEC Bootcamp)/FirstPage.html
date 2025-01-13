@@ -28,11 +28,11 @@
         </div>
         <div class="sort">
           <div id="filter">
-            <div class="chosed" value="All">All</div >
-              <div class="options">
-            <div class="option" value="All">All</div >
-            <div class="option" value="completed">Completed</div >
-            <div class="option" value="Incomplete">Incomplete</div >
+            <div class="chosed" value="All">All</div>
+            <div class="options hide" id="option-list">
+              <div class="option" value="All">All</div>
+              <div class="option" value="completed">Completed</div>
+              <div class="option" value="Incomplete">Incomplete</div>
             </div>
           </div>
         </div>
@@ -85,7 +85,7 @@
           <div class="note-popup-header">
             <h2>NEW NOTE</h2>
           </div>
-          <div class="note-popup-body">
+          <div class="note-popup-body" id="note-popup-body">
             <input
               type="text"
               id="note-input"
