@@ -14,6 +14,11 @@ const hiddenIcon = mode.querySelector("svg.hide");
 const checkbox = document.querySelectorAll(".checkbox");
 const filter = document.getElementById("filter");
 const optionList = document.getElementById("option-list");
+const undo = document.getElementById("spiner");
+const secondes = document.getElementById("sec");
+let upDateFlag = false;
+let oldNote = null;
+let undoNote = null;
 
 const toggleDetective = () => {
   if (list.children.length === 0) {
@@ -21,6 +26,20 @@ const toggleDetective = () => {
   } else {
     detective.style.display = "none";
   }
+};
+
+const wiatForUndo = () => {
+  undo.classList.remove("hide");
+  let counter = 0;
+  const times = setInterval(() => {
+    counter++;
+    secondes.innerHTML = 3 - counter;
+    if (counter >= 4) {
+      clearInterval(times);
+      undo.classList.add("hide");
+      undoNote = null;
+    }
+  }, 1000);
 };
 
 toggleDetective();
@@ -74,11 +93,17 @@ const addNote = (note) => {
 
 const removeNote = (note) => {
   const index = noteLists.findIndex((item) => item.note === note);
-  if (index !== -1) {
-    noteLists.splice(index, 1); // Remove the object at the found index
-  } else {
-    console.warn("Note not found in the list.");
-  }
+  undoNote = noteLists[index];
+  noteLists.splice(index, 1);
+  render();
+  wiatForUndo();
+};
+
+const editNote = (upDateNote) => {
+  const index = noteLists.findIndex((item) => item.note === oldNote);
+  noteLists[index].note = upDateNote;
+  render();
+  applyNote.innerHTML = "APPLY";
 };
 
 closeBtn.addEventListener("click", () => {
@@ -88,7 +113,12 @@ closeBtn.addEventListener("click", () => {
 applyNote.addEventListener("click", () => {
   const note = noteInput.value.trim();
   if (note) {
-    addNote(note);
+    if (!upDateFlag) {
+      addNote(note);
+    } else {
+      editNote(note);
+      upDateFlag = false;
+    }
     noteInput.value = "";
     notePopUp.classList.add("hide");
     toggleDetective();
@@ -128,23 +158,21 @@ noteList.addEventListener("click", (event) => {
       if (textElement) {
         const textContent = textElement.textContent;
         removeNote(textContent);
-        console.log(noteLists);
       }
       listItem.remove();
       toggleDetective();
     }
   }
   if (target.closest(".list-edit-btn")) {
+    upDateFlag = true;
     const listItem = target.closest(".list-item");
     if (listItem) {
       const textElement = listItem.querySelector(".text");
+      oldNote = textElement.textContent;
+      applyNote.innerHTML = "Update";
       notePopUp.classList.remove("hide");
       noteInput.value = textElement.textContent;
-      listItem.remove();
       noteInput.focus();
-      if (newText !== null) {
-        textElement.textContent = newText;
-      }
     }
   }
 });
@@ -153,27 +181,36 @@ filter.addEventListener("click", () => {
   optionList.classList.toggle("hide");
 });
 
-// filter.addEventListener("change", () => {
-//   const filterValue = filter.value;
-//   const listItems = noteList.querySelectorAll(".list-item");
+filter.addEventListener("change", () => {
+  const filterValue = filter.value;
+  const listItems = noteList.querySelectorAll(".list-item");
 
-//   listItems.forEach((item) => {
-//     const isCompleted = item
-//       .querySelector(".checkbox")
-//       .classList.contains("checked");
+  listItems.forEach((item) => {
+    const isCompleted = item
+      .querySelector(".checkbox")
+      .classList.contains("checked");
 
-//     if (filterValue === "All") {
-//       item.style.display = "flex";
-//     } else if (filterValue === "completed") {
-//       item.style.display = isCompleted ? "flex" : "none";
-//     } else if (filterValue === "Incomplete") {
-//       item.style.display = isCompleted ? "none" : "flex";
-//     }
-//   });
-// });
+    if (filterValue === "All") {
+      item.style.display = "flex";
+    } else if (filterValue === "completed") {
+      item.style.display = isCompleted ? "flex" : "none";
+    } else if (filterValue === "Incomplete") {
+      item.style.display = isCompleted ? "none" : "flex";
+    }
+  });
+});
 
 notePopUp.addEventListener("click", (event) => {
   if (event.target.classList.contains("note-popup")) {
     notePopUp.classList.add("hide");
+  }
+});
+
+undo.addEventListener("click", () => {
+  if (undoNote) {
+    addNote(undoNote.note);
+    toggleDetective();
+    undo.classList.add("hide");
+    undoNote = null;
   }
 });

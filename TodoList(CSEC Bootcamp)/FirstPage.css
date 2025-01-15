@@ -130,6 +130,7 @@ body {
   overflow: hidden;
   position: absolute;
   top: 100%;
+  z-index: 100; 
 }
 
 .options:hover {
@@ -392,4 +393,60 @@ body {
 .completed {
   text-decoration: line-through;
   color: gray;
+}
+
+.spiner{
+  width: 150px;
+  height: 45px;
+  background: var(--primary-hover);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 3px solid var(--primary);
+  border-radius: 5px;
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+}
+
+.spiner:hover{
+ cursor: pointer;
+ box-shadow: 0 0 5px 1px var(--primary) ;
+}
+
+.spin{
+  position: relative;
+}
+
+.loader {
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  border: 3px solid #f3f3f3; /* Light grey */
+  border-top-color: var(--primary-hover); /* Blue */
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#sec{
+  position: absolute;
+  top: 7px;
+  left: 12px
+}
+
+.undo{
+  display: flex;
+  gap: 5px;
+}
+
+.undo svg path{
+  stroke-width: 50px;
+  color: #fff;
+  fill: #fff;
 }
