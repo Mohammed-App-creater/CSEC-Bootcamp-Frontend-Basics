@@ -24,4 +24,7 @@ In this task, I learned the basics of React, a popular JavaScript library for bu
 - Rendered the page in the app.
 - Pushed the project to GitHub, including this README.md.
 
+## Example of the Page
+![Example of the Page](https://github.com/Mohammed-App-creater/CSEC-Bootcamp-Frontend-Basics/blob/master/Day11/CSEC_React/public/Screenshot%202025-01-31%20143624.png?raw=true)
+
 By the end of this task, I have a basic understanding of how to create and manage components in a React application.
