@@ -19,6 +19,7 @@ const secondes = document.getElementById("sec");
 let upDateFlag = false;
 let oldNote = null;
 let undoNote = null;
+let counter;
 
 const toggleDetective = () => {
   if (list.children.length === 0) {
@@ -28,17 +29,16 @@ const toggleDetective = () => {
   }
 };
 
-const wiatForUndo = () => {
+const waitForUndo = () => {
   undo.classList.remove("hide");
-  let counter = 0;
   const times = setInterval(() => {
-    counter++;
-    secondes.innerHTML = 3 - counter;
-    if (counter >= 4) {
+    secondes.innerHTML = counter;
+    if (counter <= -1) {
       clearInterval(times);
       undo.classList.add("hide");
       undoNote = null;
     }
+    counter -= 1;
   }, 1000);
 };
 
@@ -96,7 +96,8 @@ const removeNote = (note) => {
   undoNote = noteLists[index];
   noteLists.splice(index, 1);
   render();
-  wiatForUndo();
+  counter = 3;
+  waitForUndo();
 };
 
 const editNote = (upDateNote) => {

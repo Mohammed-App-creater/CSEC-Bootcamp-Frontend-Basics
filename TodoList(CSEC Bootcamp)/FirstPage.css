@@ -117,6 +117,7 @@ body {
   background: var(--primary);
   border-radius: 5px;
   border: 2px solid var(--primary);
+
 }
 
 .chosed:hover {
@@ -347,6 +348,7 @@ body {
   outline: none;
   font-size: 1.2rem;
   margin-bottom: 80px;
+  color: var(--color);
 }
 
 .note-popup-body input::placeholder {
