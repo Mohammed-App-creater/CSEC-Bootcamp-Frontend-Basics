@@ -1,8 +1,19 @@
-# React + Vite
+# Day 11 Task: Introduction to React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+In this task, you will learn the basics of React, a popular JavaScript library for building user interfaces. You will create a simple React application, understand the component-based architecture, and learn how to manage state and props.
 
-Currently, two official plugins are available:
+## Objectives
+- Set up a React project using Create React App
+- Understand the structure of a React application
+- Create functional components
+- Manage state using the `useState` hook
+- Pass data between components using props
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Steps
+1. Set up a new React project.
+2. Create a simple component and render it.
+3. Use the `useState` hook to manage component state.
+4. Pass data to child components using props.
+5. Build a small application to practice these concepts.
+
+By the end of this task, you should have a basic understanding of how to create and manage components in a React application.
