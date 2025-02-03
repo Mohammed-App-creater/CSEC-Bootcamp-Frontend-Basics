@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-bg: #f8f9fa;
+  --color-grid: #e0e0e0;
+  --color-x: #ff3b30;
+  --color-o: #007aff;
+  --color-text: #333333;
+  --color-button: #007aff;
+  --color-button-text: #ffffff;
+}
+
+@theme .dark {
+  --color-bg: #121212;
+  --color-grid: #333333;
+  --color-x: #ff453a;
+  --color-o: #0a84ff;
+  --color-text: #e0e0e0;
+  --color-button: #0a84ff;
+  --color-button-text: #ffffff;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+
+
+.pencil-cursor-black {
+  cursor:
+    url("./assets/Blackpencil.png") 0 190,
+    pointer;
+}
+
+.pencil-cursor-white {
+  cursor:
+    url("./assets/edit_32dp_FFFF55_FILL0_wght400_GRAD0_opsz40.png") 0 190,
+    pointer;
+}
+
+@keyframes shake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-45deg); }
+  50% { transform: rotate(45deg); }
+  75% { transform: rotate(-45deg); }
+}
+
+.shaking-element {
+  display: inline-block;
+  animation: shake 1.5s infinite ease-in-out;
+}
+
+@keyframes popups {
+  0% { transform: translate(-90%, 50%) scale(0); }
+  100% { transform: translate(10%, 0%) scale(1); }
+}
+
+.popup-element {
+  animation: popups 1.5s  ease-in-out infinite;
+  display: inline-block; 
+}
+
+@keyframes popups2 {
+  0% { transform: translate(-80%, 50%) scale(0.5); }
+  100% { transform: translate(10%, 0%) scale(1); }
+}
+
+.popup-element2 {
+  animation: popups2 1.5s  ease-in-out infinite;
+  display: inline-block; 
+  transform-origin: center;
+}
+
+
+
+@keyframes slidtoleft {
+  0% { transform: translate(100%, 0%); }
+  100% { transform: translate(-100%, 0%); }
+}
+
+@keyframes slidetoright {
+  0% { transform: translate(-100%, 0%); }
+  100% { transform: translate(0%, 0%); }
+  
+}
+
+.animate-slide-in-right{
+  animation: slidetoright 1s ease-in-out forwards;
+}
+
+.animate-slide-in-left{
+  animation: slidtoleft 1s ease-in-out forwards;
+}
+
+@keyframes slidtoleft2 {
+  0% { transform: translate(-200%, 0%); }
+  100% { transform: translate(0%, 0%); }
+}
+
+@keyframes slidetoright2 {
+  0% { transform: translate(0%, 0%); }
+  100% { transform: translate(100%, 0%); }
+  
+}
+
+.animate-slide-in-right2{
+  animation: slidetoright2 1s ease-in-out forwards;
+}
+
+.animate-slide-in-left2{
+  animation: slidtoleft2 1s ease-in-out forwards;
+}

@@ -46,3 +46,7 @@ body {
   background-color: #f2f2f2;
   border-radius: 10px;
 }
+
+.pencil-cursor {
+  cursor: url("../../Day12/X-O/src/assets/edit_32dp_000000_FILL0_wght400_GRAD0_opsz40.png"), pointer;
+}
