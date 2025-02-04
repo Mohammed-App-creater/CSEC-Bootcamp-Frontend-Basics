@@ -1,4 +1,5 @@
 import NavBar from "./components/NavBar"
+import AD from "./components/AD"
 
 
 function App() {
@@ -6,7 +7,8 @@ function App() {
 
   return (
     <>
-       <NavBar />        
+       <NavBar />
+       <AD />        
     </>
   )
 }
