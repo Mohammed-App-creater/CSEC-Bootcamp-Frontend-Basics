@@ -1,5 +1,6 @@
 import NavBar from "./components/NavBar"
 import AD from "./components/AD"
+import Job_search from "./components/Job_search"
 
 
 function App() {
@@ -8,7 +9,8 @@ function App() {
   return (
     <>
        <NavBar />
-       <AD />        
+       <AD />    
+       <Job_search />    
     </>
   )
 }
