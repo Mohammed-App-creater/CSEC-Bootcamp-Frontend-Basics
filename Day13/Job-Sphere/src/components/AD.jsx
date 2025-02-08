@@ -5,7 +5,7 @@ const AD = () => {
   return (
     <section>
         <img src={BG} alt="AD" className=" w-full" />
-        <img src={Man} alt="AD" className=" absolute top-0 right-0" />
+        <img src={Man} alt="AD" className=" absolute -top-5 right-0" />
         <img src={Shapes} alt="AD" className=" absolute -top-[30%] right-[50%] -translate-x-[-48%] " />
     </section>
   )

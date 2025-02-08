@@ -46,8 +46,8 @@ const Filter = () => {
   };
 
   return (
-    <section className=" w-1/3 h-fit flex justify-center items-center p-4">
-      <div className=" w-[65%]  border-[#87878766] border-[0.5px] p-4 rounded-2xl flex flex-col justify-center items-center gap-2 drop-shadow-lg bg-white">
+    <section className="  h-fit flex justify-center items-center p-4">
+      <div className=" w-90  border-[#87878766] border-[0.5px] p-4 rounded-2xl flex flex-col justify-center items-center gap-2 drop-shadow-lg bg-white">
         <h1 className=" text-2xl font-semibold mb-2">Filter</h1>
         <div className=" w-full">
           <label htmlFor="Date" className=" text-xl ">

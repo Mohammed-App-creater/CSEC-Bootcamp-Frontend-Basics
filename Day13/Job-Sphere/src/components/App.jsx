@@ -1,6 +1,6 @@
-import NavBar from "./components/NavBar"
-import AD from "./components/AD"
-import Job_search from "./components/Job_search"
+import NavBar from "./NavBar"
+import AD from "./AD"
+import Job_search from "./Job_search"
 
 
 function App() {
