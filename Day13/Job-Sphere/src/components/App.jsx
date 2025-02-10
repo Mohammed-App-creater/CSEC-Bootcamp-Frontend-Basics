@@ -1,6 +1,7 @@
-import NavBar from "./NavBar"
-import AD from "./AD"
-import Job_search from "./Job_search"
+// import NavBar from "./NavBar"
+// import AD from "./AD"
+// import Job_search from "./Job_search"
+import Login from "../Authentication/Login"
 import { Data } from "./Data"
 
 
@@ -10,9 +11,10 @@ function App() {
   return (
     <Data>
       <div>
-        <NavBar />
+        {/* <NavBar />
         <AD />    
-        <Job_search />
+        <Job_search /> */}
+          <Login />
       </div>
     </Data>
   )

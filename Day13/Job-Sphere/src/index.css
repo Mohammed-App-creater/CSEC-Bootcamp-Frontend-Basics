@@ -1,9 +1,13 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-html{
-    font-family: "Inter",;
-}
+:root {
+    --font-display: "Inter", sans-serif;
+  }
+  
+  body {
+    font-family: var(--font-display);
+  }
 
 body{
     background-color: #F3F3F3;
@@ -18,13 +22,13 @@ input[type="range"]::-webkit-slider-thumb {
     appearance: none;
     width: 20px;
     height: 20px;
-    background: rgba(0, 0, 0, 0); /* Light transparent blue */
+    background: rgba(0, 0, 0, 0); 
     border: 2px solid transparent;
     border-radius: 50%;
     cursor: pointer;
   }
 
   .salarySpan::selection {
-    color: black; /* Text color */
-    background-color: transparent; /* Background color (optional) */
+    color: black;  
+    background-color: transparent;  
   }

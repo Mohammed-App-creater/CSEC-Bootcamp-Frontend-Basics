@@ -1,14 +1,8 @@
-import Logo from "../assets/image_fx___1_-removebg-previewss 1.png";
+import Logo from "./Logo";
 const NavBar = () => {
   return (
     <section className=" w-full  h-20 bg-white flex justify-evenly  items-center p-4 shadow-md border-b border-blue-600">
-      <div className="  ">
-        <img
-          className="w-[120px] py-1  bg-[#0034D1] rounded-lg hover:scale-110 transition-all "
-          src={Logo}
-          alt="logo"
-        />
-      </div>
+      <Logo />
       <div className=" w-1/2 max-w-[625px]  text-[#2F2F2F] text-[18px]   flex justify-evenly items-center">
         <a className=" text-[#0034D1] underline  " href="#">
           Job Search
