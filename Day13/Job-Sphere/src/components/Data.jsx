@@ -37,15 +37,15 @@ const Data = ({ children }) => {
           `https://joblisting-rd8f.onrender.com/api/jobs?limit=100`
         );
         const result = await response.json();
-        const bookmarkedJobs = (result.jobs || []).filter(
-          (job) => job.isBookMarked
-        );
+        
+        const bookmarkedJobs = (result.jobs || []).filter(job => job.isBookMarked);
+        
         setSavedJobs(bookmarkedJobs);
       } catch (error) {
         console.error("Error fetching job data:", error);
       }
     };
-
+  
     fetchJobs();
   }, []);
 
@@ -98,6 +98,32 @@ const Data = ({ children }) => {
     }
   };
 
+  const Currency = (value) => {
+    if (value === "All") {
+      setData(originalData); 
+    } else {
+      setData(originalData.filter((job) => job.currency === value));
+    }
+  }
+
+  const Location = (value) => {
+    console.log(value);
+    if (value === "") {
+      setData(originalData);
+    } else {
+      setData(originalData.filter((job) => job.location.toUpperCase().includes(value.toUpperCase())));
+    }
+  };
+
+  const ExperienceLevel = (value) => {
+    if (value === "All") {
+      setData(originalData);
+    } else {
+      setData(originalData.filter((job) => job.experienceLevel === value));
+    }
+  }
+  
+
   return (
     <DataContext.Provider
       value={{
@@ -110,6 +136,9 @@ const Data = ({ children }) => {
         totalPages,
         Search,
         savedJobs,
+        Currency,
+        Location,
+        ExperienceLevel,
       }}
     >
       {children}

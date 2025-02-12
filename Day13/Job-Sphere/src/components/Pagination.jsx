@@ -14,7 +14,6 @@ const Pagination = () => {
   );
   useEffect(() => {
     setPage(selected);
-    console.log(selected);
   }, [selected, setPage, setSelected]);
   const Next = () => {
     if (page < totalPages) {

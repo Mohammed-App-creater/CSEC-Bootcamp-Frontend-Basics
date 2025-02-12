@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import Filter from "./Filter";
+import Filter from "../Filter/Filter";
 import Jobs from "./Jobs";
 import SavedJob from "./SavedJob";
 import SearchBar from "./SearchBar";
