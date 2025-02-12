@@ -3,8 +3,15 @@ import { FaBookmark } from "react-icons/fa";
 import { LuShare2 } from "react-icons/lu";
 import PropTypes from "prop-types";
 
-const Jobs = ({ Logo, title, company, isBookMarked, description }) => {
-  console.log(isBookMarked);
+const Jobs = ({
+  id,
+  Logo,
+  title,
+  company,
+  isBookMarked,
+  BookMark,
+  description,
+}) => {
   return (
     <div className=" w-[630px] max-h-[225px] bg-white flex gap-2 shadow-md rounded-2xl py-2 px-4 border-1 border-[#87878766] relative ">
       <div className="max-w-[55px] max-h-[55px] mt-2   mr-2 ">
@@ -14,7 +21,7 @@ const Jobs = ({ Logo, title, company, isBookMarked, description }) => {
           alt="company logo"
         />
       </div>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 ">
         <div className="flex  justify-between">
           <div>
             <h1 className=" font-semibold text-[#1A1A1A] text-[32px]">
@@ -22,7 +29,7 @@ const Jobs = ({ Logo, title, company, isBookMarked, description }) => {
             </h1>
             <h2 className=" text-[#1A1A1A]  text-[20px] mb-1">{company}</h2>
             <div className="flex gap-2">
-              <p className=" text-[#1A1A1A] text-[20px] font-light  px-2 bg-[#EBEBEB] rounded-sm ">
+              <p className=" text-[#1A1A1A] text-[20px] font-light  px-2 bg-[#EBEBEB] rounded-sm  ">
                 Remote
               </p>
               <p className=" text-[#1A1A1A] text-[20px] font-light  px-2 bg-[#EBEBEB] rounded-sm ">
@@ -34,7 +41,12 @@ const Jobs = ({ Logo, title, company, isBookMarked, description }) => {
             </div>
           </div>
           <div className=" h-full flex py-4 px-2 items-start   gap-6 absolute right-2">
-            <button className="flex items-center gap-1 text-[#1A1A1A] text-[20px] font-light">
+            <button
+              onClick={() => {
+                BookMark(id, isBookMarked);
+              }}
+              className="flex items-center gap-1 text-[#1A1A1A] text-[20px] font-light"
+            >
               {isBookMarked ? (
                 <FaBookmark size={28} />
               ) : (
@@ -56,10 +68,12 @@ const Jobs = ({ Logo, title, company, isBookMarked, description }) => {
   );
 };
 Jobs.propTypes = {
+  id: PropTypes.string.isRequired,
   Logo: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   company: PropTypes.string.isRequired,
   isBookMarked: PropTypes.bool.isRequired,
+  BookMark: PropTypes.func.isRequired,
   description: PropTypes.string.isRequired,
 };
 

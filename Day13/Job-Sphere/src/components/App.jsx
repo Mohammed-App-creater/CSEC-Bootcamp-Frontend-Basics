@@ -1,23 +1,22 @@
-// import NavBar from "./NavBar"
-// import AD from "./AD"
-// import Job_search from "./Job_search"
-import Login from "../Authentication/Login"
-import { Data } from "./Data"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import Job_search from "./Job_search";
+import Login from "../Authentication/Login";
+import Signup from "../Authentication/Signup";
+import { Data } from "./Data";
 
 function App() {
-  
-
   return (
     <Data>
-      <div>
-        {/* <NavBar />
-        <AD />    
-        <Job_search /> */}
-          <Login />
-      </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Job_search />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
+      </Router>
     </Data>
-  )
+  );
 }
 
-export default App
+export default App;

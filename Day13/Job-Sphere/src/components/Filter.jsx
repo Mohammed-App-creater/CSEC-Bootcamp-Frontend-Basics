@@ -1,12 +1,12 @@
 import { GrLocationPin } from "react-icons/gr";
 import { CiLocationOn } from "react-icons/ci";
-import { useState, useRef } from "react";
-
+import { useState, useRef, useContext, useEffect } from "react";
+import { DataContext } from "./Data";
 const Filter = () => {
-  const [min, setMin] = useState(100);
-  const [max, setMax] = useState(2000);
-  const minLimit = 20;
-  const maxLimit = 2000;
+  const [min, setMin] = useState(1000);
+  const [max, setMax] = useState(500000);
+  const minLimit = 200;
+  const maxLimit = 500_000;
 
   const trackRef = useRef(null);
   const [dragging, setDragging] = useState(null);
@@ -28,6 +28,33 @@ const Filter = () => {
       setMax(newValue);
     }
   };
+  const { JobType, salarySpan } = useContext(DataContext);
+  const [selectedTypes, setSelectedTypes] = useState([]);
+
+  const handleCheckboxClick = (type) => {
+    let updatedTypes = [];
+
+    if (selectedTypes.includes(type)) {
+      updatedTypes = selectedTypes.filter((t) => t !== type);
+    } else {
+      updatedTypes = [...selectedTypes, type];
+    }
+
+    setSelectedTypes(updatedTypes);
+    JobType(updatedTypes);
+  };
+
+  useEffect(() => {
+    salarySpan(min, max);
+  }, [min, max]);
+
+  const Reset = () => {
+    setMin(1000);
+    setMax(500000);
+    setSelectedTypes([]);
+    JobType([]);
+    salarySpan(1000, 500000);
+  }
 
   const startDrag = (type) => {
     setDragging(type);
@@ -66,31 +93,23 @@ const Filter = () => {
         <div className=" w-full">
           <h1 className=" text-xl ">Job Type</h1>
           <div className="flex flex-col  gap-2 rounded-2xl text-[#2F2F2F] border-[#87878766] border-[0.5px] w-full p-2 mt-2">
-            <div className="flex  gap-2">
-              <input type="checkbox" name="Full Time" id="Full Time" />
-              <label htmlFor="Full Time">Full Time</label>
-            </div>
-            <div className="flex  gap-2">
-              <input
-                type="checkbox"
-                className=" active:bg-amber-300"
-                name="Part Time"
-                id="Part Time"
-              />
-              <label htmlFor="Part Time">Part Time</label>
-            </div>
-            <div className="flex  gap-2">
-              <input type="checkbox" name="Internship" id="Internship" />
-              <label htmlFor="Internship">Internship</label>
-            </div>
-            <div className="flex  gap-2">
-              <input type="checkbox" name="Contract" id="Contract" />
-              <label htmlFor="Contract">Contract</label>
-            </div>
-            <div className="flex  gap-2">
-              <input type="checkbox" name="Volunteer" id="Volunteer" />
-              <label htmlFor="Volunteer">Volunteer</label>
-            </div>
+            {[
+              "Full-Time",
+              "Part Time",
+              "Internship",
+              "Contract",
+              "Volunteer",
+            ].map((type) => (
+              <div key={type} className="flex gap-2">
+                <input
+                  type="checkbox"
+                  id={type}
+                  checked={selectedTypes.includes(type)}
+                  onChange={() => handleCheckboxClick(type)}
+                />
+                <label htmlFor={type}>{type}</label>
+              </div>
+            ))}
           </div>
         </div>
         <div className=" w-full">
@@ -142,7 +161,7 @@ const Filter = () => {
               style={{
                 left: `calc(${
                   ((min - minLimit + 20) / (maxLimit - minLimit)) * 100
-                }% - 10px)`,
+                }% - 8px)`,
                 top: "-5px",
                 selected: { backgroundColor: "transparent" },
               }}
@@ -153,7 +172,7 @@ const Filter = () => {
               style={{
                 left: `calc(${
                   ((max - minLimit - 100) / (maxLimit - minLimit)) * 100
-                }% - 10px)`,
+                }% - 40px)`,
                 top: "-24px",
                 selected: { backgroundColor: "transparent" },
               }}
@@ -166,7 +185,7 @@ const Filter = () => {
               style={{
                 left: `calc(${
                   ((max - minLimit - 50) / (maxLimit - minLimit)) * 100
-                }% - 10px)`,
+                }% - 16px)`,
                 top: "-5px",
               }}
             />
@@ -202,8 +221,10 @@ const Filter = () => {
                 From
               </label>
               <input
+                onChange={(e) => setMin(e.target.value)}
                 type="number"
-                className=" rounded border-[#87878766] border-[0.5px] w-10 h-6 "
+                value={min}
+                className=" rounded border-[#87878766] focus-within:w-24 appearance-none border-[0.5px] w-10 h-6 "
               />
             </div>
             <div className="flex justify-center items-center gap-2">
@@ -212,8 +233,10 @@ const Filter = () => {
                 To
               </label>
               <input
+                onChange={(e) => setMax(e.target.value)}
                 type="number"
-                className="p-2 rounded border-[#87878766] border-[0.5px] w-10 h-6"
+                value={max}
+                className="p-2 rounded appearance-none focus-within:w-24 border-[#87878766] border-[0.5px] w-10 h-6"
               />
             </div>
           </div>
@@ -227,7 +250,7 @@ const Filter = () => {
             <option value="ETB">ETB</option>
           </select>
         </div>
-        <button className=" w-[80%] bg-[#0034D1] text-white p-2 rounded-lg mt-4">
+        <button onClick={Reset} className=" w-[80%] bg-[#0034D1] text-white p-2 rounded-lg mt-4">
           Reset all Filters
         </button>
       </div>

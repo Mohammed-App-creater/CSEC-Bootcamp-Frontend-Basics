@@ -6,7 +6,7 @@ import Auth from "../components/Auth";
 const Login = () => {
   return (
     <section className=" w-screen h-screen flex  ">
-      <div className="w-1/2 h-full bg-[#F2F2F2] flex items-center justify-center  ">
+       <div className="w-1/2 h-full bg-[#F2F2F2] flex items-center justify-center shadow-[2px_0_5px_rgb(166,171,189)] z-10">
         <img
           className="max-w-[740px] max-h-[550px]  "
           src={singinBG}
@@ -52,7 +52,7 @@ const Login = () => {
           </div>
           <Auth />
             <p className="text-[#2F2F2F] text-lg font-semibold mt-3">
-                Don't have an account? 
+                Don&apos;t have an account? 
                 <span className="text-[#0034D1] cursor-pointer">  Create account</span>
             </p>
         </div>
