@@ -4,7 +4,7 @@ import { IoMdClose } from "react-icons/io";
 const SavedJob = () => {
   const { BookMark, savedJobs } = useContext(DataContext);
   return (
-    <section className=" w-85 max-h-[600px]  flex justify-center bg-white rounded-2xl shadow-2xl border-1 border-[#87878766] mt-4 z-10 overflow-x-hidden scrollable-container">
+    <section className=" w-85 max-h-[820px]  flex justify-center bg-white rounded-2xl shadow-2xl border-1 border-[#87878766] mt-4 z-10 overflow-x-hidden scrollable-container">
       <div className=" w-full h-fit flex flex-col gap-6 py-6 px-4 items-center">
         <h1 className=" w-full h-12 flex justify-center items-center text-3xl text-[#2F2F2F]  bg-white sticky top-0 font-bold z-20">Saved Jobs</h1>
         { savedJobs && savedJobs.length > 0 ? (

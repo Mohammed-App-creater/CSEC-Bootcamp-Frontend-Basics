@@ -3,10 +3,10 @@ import { MdOutlineLocationOn } from "react-icons/md";
 import  { useContext } from "react";
 import { DataContext } from "./Data";
 const SearchBar = () => {
-  const { Search }  = useContext(DataContext); 
+  const { setSearchQuery }  = useContext(DataContext); 
   const handleSearch = (e) => {
     const query = e.target.value;
-    Search(query);
+    setSearchQuery(query);
   };
   return (
     <div className=" w-full flex gap-1 bg-white  py-2 px-4 rounded-2xl drop-shadow-lg mb-10">

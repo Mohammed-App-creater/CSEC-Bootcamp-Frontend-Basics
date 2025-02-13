@@ -25,6 +25,8 @@ const Job_search = () => {
               Logo={job.logo}
               title={job.title}
               company={job.company}
+              location={job.location}
+              Type={job.type}
               isBookMarked={job.isBookMarked}
               BookMark={BookMark}
               description={job.description}

@@ -39,7 +39,7 @@ const Pagination = () => {
         <button
           key={p}
           onClick={() => setSelected(p)}
-          className={` text-[#1A1A1A] text-[20px] font-light  px-2 bg-white hover:scale-125  transition-all  border border-[#87878766] drop-shadow-lg rounded-sm ${
+          className={` text-[#1A1A1A] text-[20px] font-light py-1  px-3 bg-white hover:scale-125  transition-all  border border-[#87878766] drop-shadow-lg rounded-sm ${
             selected === p ? "bg-[#0034D1]" : ""
           }`}
         >
@@ -54,7 +54,7 @@ const Pagination = () => {
       {totalPages > 6 && totalPages > pages[pages.length - 1] && (
         <button
           onClick={() => setSelected(totalPages)}
-          className={` text-[#1A1A1A] text-[20px] font-light  px-2 bg-white hover:scale-125  transition-all  border border-[#87878766] drop-shadow-lg rounded-sm ${
+          className={` text-[#1A1A1A] text-[20px] font-light  py-1  px-3 bg-white hover:scale-125  transition-all  border border-[#87878766] drop-shadow-lg rounded-sm ${
             selected === totalPages ? "bg-[#0034D1]" : ""
           }`}
         >
@@ -64,7 +64,7 @@ const Pagination = () => {
       
       <button
         onClick={Next}
-        className=" text-white text-[20px] px-4 py-1 font-light  px-2 bg-[#0034D1]  drop-shadow-lg rounded-sm  "
+        className=" text-white text-[20px] px-4 py-1 font-light   bg-[#0034D1]  drop-shadow-lg rounded-sm  "
       >
         Next
       </button>

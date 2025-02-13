@@ -1,9 +1,10 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { DataContext } from "../../components/Data";
+import { PropTypes } from 'prop-types';
 
-const JobTypeFilter = () => {
-  const { JobType } = useContext(DataContext);
-  const [selectedTypes, setSelectedTypes] = useState([]);
+const JobTypeFilter = ({ Reset }) => {
+  const { setSelectedTypes } = useContext(DataContext);
+  const [selectedTypes, setSelectedTypes2] = useState([]);
 
   const handleCheckboxClick = (type) => {
     let updatedTypes = [];
@@ -14,14 +15,23 @@ const JobTypeFilter = () => {
       updatedTypes = [...selectedTypes, type];
     }
 
+    setSelectedTypes2(updatedTypes);
     setSelectedTypes(updatedTypes);
-    JobType(updatedTypes);
   };
+
+  useEffect(() => {
+    if (Reset) {
+      setSelectedTypes2([]);
+      setSelectedTypes([]);
+    }
+  }, [Reset, setSelectedTypes]);
+
+
   return (
     <div className=" w-full">
       <h1 className=" text-xl ">Job Type</h1>
       <div className="flex flex-col  gap-2 rounded-2xl text-[#2F2F2F] border-[#87878766] border-[0.5px] w-full p-2 mt-2">
-        {["Full-Time", "Part Time", "Internship", "Contract", "Volunteer"].map(
+        {[ 'Full-Time', 'Hybrid', 'Internship', 'Contract', 'Volunteer', 'Remote'].map(
           (type) => (
             <div key={type} className="flex gap-2">
               <input
@@ -37,6 +47,10 @@ const JobTypeFilter = () => {
       </div>
     </div>
   );
+};
+
+JobTypeFilter.propTypes = {
+  Reset: PropTypes.bool.isRequired,
 };
 
 export default JobTypeFilter;

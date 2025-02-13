@@ -8,6 +8,8 @@ const Jobs = ({
   Logo,
   title,
   company,
+  location,
+  Type,
   isBookMarked,
   BookMark,
   description,
@@ -30,10 +32,10 @@ const Jobs = ({
             <h2 className=" text-[#1A1A1A]  text-[20px] mb-1">{company}</h2>
             <div className="flex gap-2">
               <p className=" text-[#1A1A1A] text-[20px] font-light  px-2 bg-[#EBEBEB] rounded-sm  ">
-                Remote
+                {location}
               </p>
               <p className=" text-[#1A1A1A] text-[20px] font-light  px-2 bg-[#EBEBEB] rounded-sm ">
-                Part-Time
+                {Type}
               </p>
               <p className=" text-[#1A1A1A] text-[20px] font-light  px-2 bg-[#EBEBEB] rounded-sm ">
                 $200 - $1,200
@@ -72,6 +74,8 @@ Jobs.propTypes = {
   Logo: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   company: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  Type: PropTypes.string.isRequired,
   isBookMarked: PropTypes.bool.isRequired,
   BookMark: PropTypes.func.isRequired,
   description: PropTypes.string.isRequired,

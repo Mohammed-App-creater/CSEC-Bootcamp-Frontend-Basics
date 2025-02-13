@@ -1,70 +1,41 @@
-import { useEffect, useRef, useState, useContext } from "react";
-import { GrLocationPin } from "react-icons/gr";
+import { useEffect, useState, useContext } from "react";
 import { DataContext } from "../../components/Data";
+import RangeSlider from "react-range-slider-input";
+import PropTypes from "prop-types";
+import "./Salary.css";
 
-const SalaryFilter = () => {
-  const { salarySpan } = useContext(DataContext);
+const SalaryFilter = ({ Reset }) => {
+  const { setSalaryRange } = useContext(DataContext);
   const [min, setMin] = useState(1000);
   const [max, setMax] = useState(500000);
+  const [value, setValue] = useState([1000, 500000]);
   const minLimit = 200;
   const maxLimit = 500_000;
 
-  const trackRef = useRef(null);
-  const [dragging, setDragging] = useState(null);
-
-  const handleDrag = (e) => {
-    if (!trackRef.current) return;
-
-    const track = trackRef.current;
-    const trackRect = track.getBoundingClientRect();
-    const position = e.clientX || e.touches?.[0]?.clientX;
-    let percentage = (position - trackRect.left) / trackRect.width;
-
-    percentage = Math.max(0, Math.min(1, percentage));
-    const newValue = Math.round(minLimit + percentage * (maxLimit - minLimit));
-
-    if (dragging === "min" && newValue < max - 200) {
-      setMin(newValue);
-    } else if (dragging === "max" && newValue > min + 200) {
-      setMax(newValue);
-    }
-  };
-  const startDrag = (type) => {
-    setDragging(type);
-    document.addEventListener("mousemove", handleDrag);
-    document.addEventListener("mouseup", stopDrag);
-    document.addEventListener("touchmove", handleDrag);
-    document.addEventListener("touchend", stopDrag);
-  };
-
-  const stopDrag = () => {
-    setDragging(null);
-    document.removeEventListener("mousemove", handleDrag);
-    document.removeEventListener("mouseup", stopDrag);
-    document.removeEventListener("touchmove", handleDrag);
-    document.removeEventListener("touchend", stopDrag);
-  };
+  
 
   useEffect(() => {
-    salarySpan(min, max);
+    setSalaryRange(min, max);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [min, max]);
+
+  useEffect(() => {
+    if (Reset) {
+      setMin(1000);
+      setMax(500000);
+    }
+  }, [Reset]);
+
+  useEffect(()=>{
+    setMin(value[0])
+    setMax(value[1])
+  }, [value])
+
   return (
     <div className="w-full flex flex-col gap-1">
-      <div className="w-full">
+      <div className="w-full flex flex-col gap-6   items-start text-[#2F2F2F] mb-2 ">
         <h1 className="text-xl">Salary Range</h1>
-        <div className="relative mt-6 h-10" ref={trackRef}>
-          <div className="absolute top-1/2 left-0 w-full h-2 bg-gray-300 rounded-full transform -translate-y-1/2"></div>
-
-          <div
-            className="absolute top-1/2 bg-blue-600 h-2 rounded-full transform -translate-y-1/2"
-            style={{
-              left: `${((min - minLimit) / (maxLimit - minLimit)) * 100}%`,
-              right: `${
-                100 - ((max - minLimit) / (maxLimit - minLimit)) * 100
-              }%`,
-            }}
-          ></div>
-
+        <div className=" w-full flex justify-center items-center y-8 gap-2 relative">
           <span
             className="absolute text-sm text-gray-800 cursor-pointer salarySpan"
             style={{
@@ -76,17 +47,6 @@ const SalaryFilter = () => {
           >
             ${min}
           </span>
-          <GrLocationPin
-            onDrag={() => startDrag("min")}
-            className="absolute text-2xl text-gray-800 cursor-pointer"
-            style={{
-              left: `calc(${
-                ((min - minLimit + 20) / (maxLimit - minLimit)) * 100
-              }% - 8px)`,
-              top: "-5px",
-              selected: { backgroundColor: "transparent" },
-            }}
-          />
 
           <span
             className="absolute text-sm text-gray-800  cursor-pointer salarySpan"
@@ -100,37 +60,12 @@ const SalaryFilter = () => {
           >
             ${max}
           </span>
-          <GrLocationPin
-            onDrag={() => startDrag("max")}
-            className="absolute text-2xl text-gray-800 cursor-pointer  "
-            style={{
-              left: `calc(${
-                ((max - minLimit - 50) / (maxLimit - minLimit)) * 100
-              }% - 16px)`,
-              top: "-5px",
-            }}
-          />
-
-          <input
-            type="range"
-            min={minLimit}
-            max={maxLimit}
-            value={min}
-            onChange={(e) => setMin(Math.min(Number(e.target.value), max - 1))}
-            className="absolute w-full h-2 appearance-none bg-transparent pointer-events-none"
-          />
-          <input
-            type="range"
-            min={minLimit}
-            max={maxLimit}
-            value={max}
-            onChange={(e) => setMax(Math.max(Number(e.target.value), min + 1))}
-            className="absolute w-full h-2 appearance-none bg-transparent pointer-events-none"
-          />
+          <RangeSlider max={maxLimit} min={minLimit} value={value} onInput={setValue}  defaultValue={[min, max]}   />
         </div>
       </div>
       <div className=" w-full flex flex-col gap-1 items-start text-[#2F2F2F] ">
         <h1 className=" text-xl  "> Input Manually</h1>
+
         <div className="flex justify-center items-center gap-12">
           <div className="flex justify-center items-center gap-2">
             <label htmlFor="Min" className=" text-sm ">
@@ -160,6 +95,10 @@ const SalaryFilter = () => {
       </div>
     </div>
   );
+};
+
+SalaryFilter.propTypes = {
+  Reset: PropTypes.bool.isRequired,
 };
 
 export default SalaryFilter;

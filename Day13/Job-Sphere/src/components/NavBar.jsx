@@ -1,7 +1,7 @@
 import Logo from "./Logo";
 const NavBar = () => {
   return (
-    <section className="  w-full  h-20 bg-white flex justify-evenly  items-center p-4 shadow-md border-b border-blue-600 z-100">
+    <section className="  w-full  h-20 bg-white flex justify-evenly  items-center p-4 shadow-md border-b border-blue-600 z-10">
       <Logo />
       <div className=" w-1/2 max-w-[625px]  text-[#2F2F2F] text-[18px]   flex justify-evenly items-center">
         <a className=" text-[#0034D1] underline  " href="#">

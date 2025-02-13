@@ -1,9 +1,11 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { CiLocationOn } from "react-icons/ci";
 import { DataContext } from "../../components/Data";
+import PropTypes from "prop-types";
 
-const LocationFilter = () => {
-  const { Location } = useContext(DataContext);
+
+const LocationFilter = ({ Reset }) => {
+  const { setLocation } = useContext(DataContext);
   const [inputValue, setInputValue] = useState("");
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
 
@@ -12,6 +14,10 @@ const LocationFilter = () => {
     "London, UK",
     "Addis Ababa, Ethiopia",
     "Berlin, Germany",
+    "Toronto, Canada",
+    "Paris, France",
+    "Tokyo, Japan",
+    "Sydney, Australia",
   ];
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -26,14 +32,22 @@ const LocationFilter = () => {
     } else {
       setFilteredSuggestions([]);
     }
-    Location(value);
+    setLocation(value);
   };
 
   const handleSelectSuggestion = (suggestion) => {
     setInputValue(suggestion);
     setFilteredSuggestions([]);
-    Location(suggestion);
+    setLocation(suggestion);
   };
+
+  useEffect(() => {
+    if (Reset) {
+      setInputValue("");
+      setFilteredSuggestions([]);
+    }
+  }, [Reset]);
+
   return (
     <div className="w-full relative">
       <h1 className="text-xl">Location</h1>
@@ -64,6 +78,10 @@ const LocationFilter = () => {
       )}
     </div>
   );
+};
+
+LocationFilter.propTypes = {
+  Reset: PropTypes.bool.isRequired,
 };
 
 export default LocationFilter;
