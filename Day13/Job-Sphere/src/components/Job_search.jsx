@@ -1,18 +1,19 @@
-import { useContext } from "react";
 import Filter from "../Filter/Filter";
 import Jobs from "./Jobs";
 import SavedJob from "./SavedJob";
 import SearchBar from "./SearchBar";
-import { DataContext } from "./Data";
-import Pagination from "./Pagination";
-import NavBar from "./NavBar";
+import Pagination from "./Pagination"
+import useJobStore from "./store/DataStore";
 import AD from "./AD";
 const Job_search = () => {
-  const { jobs, BookMark } = useContext(DataContext);
+
+const jobs = useJobStore((state) => state.filteredData);
+const BookMark = useJobStore((state) => state.BookMark);
+
 
   return (
     <section className=" flex flex-col  ">
-      <NavBar />
+      
       <AD />
       <div className=" flex  justify-evenly items-start gap-4 mt-10 px-24">
         <Filter />

@@ -1,32 +1,35 @@
-import { useState, useContext, useEffect } from "react";
-import { DataContext } from "./Data";
+import useJobStore from "./store/DataStore";
+import { useEffect } from "react";
 
 const Pagination = () => {
-  const { page, setPage, totalPages } = useContext(DataContext);
-  const [selected, setSelected] = useState(1);
-
-  const startPage = Math.min(page, totalPages - 4); 
-  const endPage = Math.min(startPage + 3, totalPages); 
-
+  const page = useJobStore((state) => state.page);
+  const setPage = useJobStore((state) => state.setPage);
+  const totalPages = useJobStore((state) => state.totalPages);
+  
+  const startPage = Math.max(1, Math.min(page, totalPages - 4));
+  const endPage = Math.min(startPage + 3, totalPages);
+  
   const pages = Array.from(
     { length: endPage - startPage + 1 },
     (_, i) => startPage + i
   );
+  
   useEffect(() => {
-    setPage(selected);
-  }, [selected, setPage, setSelected]);
+    setPage(page); // Remove `setSelected`, since Zustand manages page state
+  }, [page, setPage]);
+  
   const Next = () => {
     if (page < totalPages) {
       setPage(page + 1);
-      setSelected(selected + 1);
     }
   };
+  
   const Prev = () => {
     if (page > 1) {
       setPage(page - 1);
-      setSelected(selected - 1);
     }
   };
+  
   return (
     <section className=" w-full h-24    flex justify-center items-center gap-4 mt-4 pb-4">
       <button
@@ -38,9 +41,9 @@ const Pagination = () => {
       {pages.map((p) => (
         <button
           key={p}
-          onClick={() => setSelected(p)}
+          onClick={() => setPage(p)}
           className={` text-[#1A1A1A] text-[20px] font-light py-1  px-3 bg-white hover:scale-125  transition-all  border border-[#87878766] drop-shadow-lg rounded-sm ${
-            selected === p ? "bg-[#0034D1]" : ""
+            page === p ? "bg-[#0034D1]" : ""
           }`}
         >
           {p}
@@ -53,15 +56,15 @@ const Pagination = () => {
       )}
       {totalPages > 6 && totalPages > pages[pages.length - 1] && (
         <button
-          onClick={() => setSelected(totalPages)}
+          onClick={() => setPage(totalPages)}
           className={` text-[#1A1A1A] text-[20px] font-light  py-1  px-3 bg-white hover:scale-125  transition-all  border border-[#87878766] drop-shadow-lg rounded-sm ${
-            selected === totalPages ? "bg-[#0034D1]" : ""
+            page === totalPages ? "bg-[#0034D1]" : ""
           }`}
         >
           {totalPages}
         </button>
       )}
-      
+
       <button
         onClick={Next}
         className=" text-white text-[20px] px-4 py-1 font-light   bg-[#0034D1]  drop-shadow-lg rounded-sm  "

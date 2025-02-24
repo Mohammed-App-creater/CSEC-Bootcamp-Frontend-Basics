@@ -1,10 +1,12 @@
-import { useState, useContext, useEffect } from "react";
-import { DataContext } from "../../components/Data";
-import { PropTypes } from 'prop-types';
+import { useState } from "react";
+import useJobStore from "../../components/store/DataStore";
 
-const JobTypeFilter = ({ Reset }) => {
-  const { setSelectedTypes } = useContext(DataContext);
-  const [selectedTypes, setSelectedTypes2] = useState([]);
+
+
+const JobTypeFilter = () => {
+  const { setSelectedTypes } = useJobStore();
+  const JobTypeFilter = useJobStore((state) => state.filters.selectedTypes);
+  const [selectedTypes, setSelectedTypess] = useState([]);
 
   const handleCheckboxClick = (type) => {
     let updatedTypes = [];
@@ -15,16 +17,11 @@ const JobTypeFilter = ({ Reset }) => {
       updatedTypes = [...selectedTypes, type];
     }
 
-    setSelectedTypes2(updatedTypes);
-    setSelectedTypes(updatedTypes);
+    setSelectedTypess(updatedTypes);
+    setSelectedTypes(updatedTypes);    
+    console.log("selectedTypes", JobTypeFilter);
   };
 
-  useEffect(() => {
-    if (Reset) {
-      setSelectedTypes2([]);
-      setSelectedTypes([]);
-    }
-  }, [Reset, setSelectedTypes]);
 
 
   return (
@@ -49,8 +46,5 @@ const JobTypeFilter = ({ Reset }) => {
   );
 };
 
-JobTypeFilter.propTypes = {
-  Reset: PropTypes.bool.isRequired,
-};
 
 export default JobTypeFilter;

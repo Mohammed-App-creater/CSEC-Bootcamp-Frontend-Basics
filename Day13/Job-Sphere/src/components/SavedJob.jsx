@@ -1,8 +1,9 @@
-import { useContext } from "react";
-import { DataContext } from "./Data";
+import useJobStore from "./store/DataStore";
 import { IoMdClose } from "react-icons/io";
 const SavedJob = () => {
-  const { BookMark, savedJobs } = useContext(DataContext);
+
+  const BookMark = useJobStore((state) => state.BookMark);
+  const savedJobs = useJobStore((state) => state.savedJobs);
   return (
     <section className=" w-85 max-h-[820px]  flex justify-center bg-white rounded-2xl shadow-2xl border-1 border-[#87878766] mt-4 z-10 overflow-x-hidden scrollable-container">
       <div className=" w-full h-fit flex flex-col gap-6 py-6 px-4 items-center">

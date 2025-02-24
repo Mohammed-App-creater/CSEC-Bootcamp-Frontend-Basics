@@ -1,26 +1,22 @@
-import { useContext, useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { DataContext } from "../../components/Data";
+import useJobStore from "../../components/store/DataStore";
 
-const CurrencyFilter = ({ Reset }) => {
-  const { setCurrency } = useContext(DataContext);
-  const [currency, setCurrency2] = useState("All");
-  const hadleChange = (e) => {
-    setCurrency(e.target.value);
-    setCurrency2(e.target.value);
+const CurrencyFilter = () => {
+  const { setCurrency } = useJobStore();
+  const currency = useJobStore((state) => state.filters.currency); // Use Zustand state directly
+  
+  const handleChange = (e) => {
+    const newCurrency = e.target.value; // Get the selected value
+  
+    setCurrency(newCurrency);
   };
-  useEffect(() => {
-    if (Reset) {
-      setCurrency("All");
-      setCurrency2("All");
-    }
-  }, [setCurrency, Reset]);
+  
+
   return (
     <div className=" w-full">
       <h1 className=" text-xl ">Currency</h1>
       <select
         value={currency}
-        onChange={hadleChange}
+        onChange={handleChange}
         className="p-2 rounded-lg border-[#87878766] border-[0.5px] w-full flex justify-center items-center text-gray-600 mt-2"
       >
         <option value="All">ALL</option>
@@ -29,10 +25,6 @@ const CurrencyFilter = ({ Reset }) => {
       </select>
     </div>
   );
-};
-
-CurrencyFilter.propTypes = {
-  Reset: PropTypes.bool.isRequired,
 };
 
 export default CurrencyFilter;
