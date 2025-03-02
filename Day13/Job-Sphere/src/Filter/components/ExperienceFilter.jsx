@@ -4,7 +4,7 @@ const ExperienceFilter = () => {
   const { setExperienceLevel } = useJobStore();
 
   const handleChange = (e) => {
-    setExperienceLevel(e.target.value)
+    setExperienceLevel(e.target.value);
   };
 
   return (

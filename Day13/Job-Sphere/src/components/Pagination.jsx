@@ -5,31 +5,31 @@ const Pagination = () => {
   const page = useJobStore((state) => state.page);
   const setPage = useJobStore((state) => state.setPage);
   const totalPages = useJobStore((state) => state.totalPages);
-  
+
   const startPage = Math.max(1, Math.min(page, totalPages - 4));
   const endPage = Math.min(startPage + 3, totalPages);
-  
+
   const pages = Array.from(
     { length: endPage - startPage + 1 },
-    (_, i) => startPage + i
+    (_, i) => startPage + i,
   );
-  
+
   useEffect(() => {
-    setPage(page); // Remove `setSelected`, since Zustand manages page state
+    setPage(page);
   }, [page, setPage]);
-  
+
   const Next = () => {
     if (page < totalPages) {
       setPage(page + 1);
     }
   };
-  
+
   const Prev = () => {
     if (page > 1) {
       setPage(page - 1);
     }
   };
-  
+
   return (
     <section className=" w-full h-24    flex justify-center items-center gap-4 mt-4 pb-4">
       <button

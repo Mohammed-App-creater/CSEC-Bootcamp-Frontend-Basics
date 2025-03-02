@@ -4,18 +4,16 @@ import RangeSlider from "react-range-slider-input";
 import "./Salary.css";
 
 const SalaryFilter = () => {
-  const {setSalaryRange } = useJobStore();
+  const { setSalaryRange } = useJobStore();
   const [min, setMin] = useState(35000);
   const [max, setMax] = useState(200000);
   const [value, setValue] = useState([min, max]);
   const minLimit = 200;
   const maxLimit = 500_000;
 
- 
   useEffect(() => {
     setSalaryRange({ min: min, max: max });
   }, [value, min, max, setSalaryRange]);
-  
 
   useEffect(() => {
     setMin(value[0]);

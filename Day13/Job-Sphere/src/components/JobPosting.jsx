@@ -7,7 +7,7 @@ import useJobPost from "./store/useJobPost";
 import "../styles/loader.css";
 
 export const JobPosting = () => {
-  const { jobPost, setJobPost, loading, setLoading } = useJobPost();
+  const { jobPost, postJob, loading } = useJobPost();
   const inputFields = [
     ["title", "type", "salary"],
     ["description", "location", "experienceLevel"],
@@ -42,13 +42,14 @@ export const JobPosting = () => {
         initialValues={jobPost}
         validationSchema={validationSchema}
         validateOnBlur={true}
-        onSubmit={(values) => {
-          setLoading(true);
-          setTimeout(() => {
-            console.log("Form Submitted:", values);
-            setJobPost(values);
-            setLoading(false);
-          }, 2000); 
+        onSubmit={async (values, { setSubmitting }) => {
+          try {
+            await postJob(values); // Call postJob with values
+          } catch (error) {
+            console.error("Job submission error:", error);
+          } finally {
+            setSubmitting(false);
+          }
         }}
       >
         {({ values, handleChange, errors, touched }) => (
@@ -97,32 +98,35 @@ export const JobPosting = () => {
               )}
 
               <div className="flex justify-between mt-4">
-                { currentStep === 0 ? null :    <button
-                  type="button"
-                  onClick={() =>
-                    setCurrentStep((prev) => Math.max(prev - 1, 0))
-                  }
-                  className="bg-gray-300 text-black rounded-md w-32 h-10"
-                  disabled={currentStep === 0}
-                >
-                  Previous
-                </button>}
-
-                { currentStep === inputFields.length - 1 ? null :  <button
-                  type="button"
-                  onClick={() => {
-                    if (!Object.keys(errors).some((key) => touched[key])) {
-                      setCurrentStep((prev) =>
-                        Math.min(prev + 1, inputFields.length - 1)
-                      );
+                {currentStep === 0 ? null : (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setCurrentStep((prev) => Math.max(prev - 1, 0))
                     }
-                  }}
-                  className="bg-[#0034D1] text-white rounded-md w-32 h-10"
-                  disabled={currentStep === inputFields.length - 1}
-                >
-                  Next
-                </button>}
+                    className="bg-gray-300 text-black rounded-md w-32 h-10"
+                    disabled={currentStep === 0}
+                  >
+                    Previous
+                  </button>
+                )}
 
+                {currentStep === inputFields.length - 1 ? null : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!Object.keys(errors).some((key) => touched[key])) {
+                        setCurrentStep((prev) =>
+                          Math.min(prev + 1, inputFields.length - 1),
+                        );
+                      }
+                    }}
+                    className="bg-[#0034D1] text-white rounded-md w-32 h-10"
+                    disabled={currentStep === inputFields.length - 1}
+                  >
+                    Next
+                  </button>
+                )}
               </div>
 
               {currentStep === inputFields.length - 1 && (
@@ -134,7 +138,6 @@ export const JobPosting = () => {
                   {loading ? "Posting..." : "Post Job"}
                 </button>
               )}
-              
             </Form>
           </>
         )}

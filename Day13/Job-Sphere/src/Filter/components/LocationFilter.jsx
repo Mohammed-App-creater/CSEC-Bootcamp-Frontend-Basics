@@ -1,9 +1,8 @@
-import { useState,  useEffect } from "react";
+import { useState, useEffect } from "react";
 import { CiLocationOn } from "react-icons/ci";
-import useJobStore from "../../components/store/DataStore"; 
+import useJobStore from "../../components/store/DataStore";
 
 import PropTypes from "prop-types";
-
 
 const LocationFilter = ({ Reset }) => {
   const { setLocation } = useJobStore();
@@ -27,21 +26,20 @@ const LocationFilter = ({ Reset }) => {
     if (value) {
       setFilteredSuggestions(
         locationSuggestions.filter((loc) =>
-          loc.toLowerCase().includes(value.toLowerCase())
-        )
+          loc.toLowerCase().includes(value.toLowerCase()),
+        ),
       );
     } else {
       setFilteredSuggestions([]);
     }
-    console.log(value)
-    setLocation(value)
-    
+    console.log(value);
+    setLocation(value);
   };
 
   const handleSelectSuggestion = (suggestion) => {
     setInputValue(suggestion);
     setFilteredSuggestions([]);
-    setLocation(suggestion)
+    setLocation(suggestion);
   };
 
   useEffect(() => {
@@ -65,7 +63,6 @@ const LocationFilter = ({ Reset }) => {
         />
       </div>
 
-      
       {filteredSuggestions.length > 0 && (
         <ul className="absolute left-0 right-0 bg-white border border-gray-300 rounded-lg mt-1 shadow-lg z-10">
           {filteredSuggestions.map((suggestion, index) => (

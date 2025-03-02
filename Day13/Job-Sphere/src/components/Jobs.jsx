@@ -2,6 +2,8 @@ import { BsBookmark } from "react-icons/bs";
 import { FaBookmark } from "react-icons/fa";
 import { LuShare2 } from "react-icons/lu";
 import PropTypes from "prop-types";
+import {  useNavigate } from "react-router-dom"
+
 
 const Jobs = ({
   id,
@@ -13,9 +15,15 @@ const Jobs = ({
   isBookMarked,
   BookMark,
   description,
+  Salary,
 }) => {
+  const navigate = useNavigate();
+  const handleJobClick = () => {
+    // navigate(`/job/${id}`);
+    navigate(`/description`);
+  }
   return (
-    <div className=" w-[630px] max-h-[225px] bg-white flex gap-2 shadow-md rounded-2xl py-2 px-4 border-1 border-[#87878766] relative ">
+    <div onClick={handleJobClick} className=" w-[630px] max-h-[225px] bg-white flex gap-2 shadow-md rounded-2xl py-2 px-4 border-1 border-[#87878766] relative ">
       <div className="max-w-[55px] max-h-[55px] mt-2   mr-2 ">
         <img
           className=" w-fll h-full object-top object-contain rounded-lg"
@@ -38,7 +46,7 @@ const Jobs = ({
                 {Type}
               </p>
               <p className=" text-[#1A1A1A] text-[20px] font-light  px-2 bg-[#EBEBEB] rounded-sm ">
-                $200 - $1,200
+                ${Salary}
               </p>
             </div>
           </div>
@@ -79,6 +87,7 @@ Jobs.propTypes = {
   isBookMarked: PropTypes.bool.isRequired,
   BookMark: PropTypes.func.isRequired,
   description: PropTypes.string.isRequired,
+  Salary: PropTypes.string.isRequired,
 };
 
 export default Jobs;

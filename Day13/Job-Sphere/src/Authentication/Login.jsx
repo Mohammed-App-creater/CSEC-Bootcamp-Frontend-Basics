@@ -106,7 +106,10 @@ const Login = () => {
           <Auth />
           <p className="text-[#2F2F2F] text-lg font-semibold mt-3">
             Don&apos;t have an account?
-            <span onClick={() => navigator('/signup')} className="text-[#0034D1] cursor-pointer">
+            <span
+              onClick={() => navigator("/signup")}
+              className="text-[#0034D1] cursor-pointer"
+            >
               {" "}
               Create account
             </span>

@@ -24,7 +24,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<NavBar />}>
-        <Route path="/jobposting" element={<JobPosting />} />
+          <Route path="/jobposting" element={<JobPosting />} />
           <Route index element={<Job_search />} />
           <Route path="/description" element={<DiscriptionPage />} />
         </Route>
