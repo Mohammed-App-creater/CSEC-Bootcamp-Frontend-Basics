@@ -2,9 +2,11 @@ import SearchBar from "../components/SearchBar";
 import Discription from "./components/Discription";
 import { IoChevronBack } from "react-icons/io5";
 import SavedJob from "../components/SavedJob";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 const DiscriptionPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const id = location.state._id;
   return (
     <section className=" flex flex-col  ">
       <section className="flex flex-col  justify-center items-start gap-4 mt-10 px-24">
@@ -18,7 +20,7 @@ const DiscriptionPage = () => {
           <SearchBar />
         </div>
         <div className=" w-full flex  items-start justify-between pr-10 gap-4">
-          <Discription />
+          <Discription id={id}/>
           <SavedJob />
         </div>
       </section>

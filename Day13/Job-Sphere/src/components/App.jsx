@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
 import Job_search from "./Job_search";
 import Login from "../Authentication/Login";
 import Signup from "../Authentication/Signup";
@@ -12,11 +11,13 @@ import { JobPosting } from "./JobPosting.jsx";
 function App() {
   const fetchJobs = useJobStore((state) => state.fetchJobs);
   const fetchAllJobs = useJobStore((state) => state.fetchAllJobs);
+  
+
+
 
   useEffect(() => {
     fetchJobs();
-    fetchAllJobs();
-  }, []);
+  }, [fetchJobs, fetchAllJobs]);
 
   return (
     <Router>

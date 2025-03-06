@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import _ from "lodash";
 
 const useJobStore = create((set, get) => ({
   data: [],
@@ -7,9 +8,9 @@ const useJobStore = create((set, get) => ({
   filteredData: [],
   isFiltered: false,
   page: 1,
-  totalPages: 0,
+  totalJobs: 0,
   filters: {
-    selectedTypes: ["normal"],
+    selectedTypes: [],
     salaryRange: { min: 35000, max: 200000 },
     searchQuery: "",
     currency: "All",
@@ -20,18 +21,15 @@ const useJobStore = create((set, get) => ({
   fetchJobs: async () => {
     try {
       const response = await fetch(
-        `https://joblisting-3hjv.onrender.com/api/jobs?page=${
-          get().page
-        }&limit=4`,
+        `http://localhost:3000/api/jobs?page=${get().page}&limit=4`
       );
       const result = await response.json();
-      if (result.jobs && result.total) {
+
+      if (result.jobs && result.totalJobs) {
         set({
-          data: result.jobs,
           originalData: result.jobs,
-          totalPages: Math.ceil(result.total / 4),
+          totalJobs: Math.ceil(result.totalJobs),
         });
-        console.log("result", get().originalData);
       }
     } catch (error) {
       console.error("Error fetching job data:", error);
@@ -40,15 +38,14 @@ const useJobStore = create((set, get) => ({
 
   fetchAllJobs: async () => {
     try {
-      const response = await fetch(
-        `https://joblisting-3hjv.onrender.com/api/jobs?limit=100`,
-      );
+      const response = await fetch(`http://localhost:3000/api/jobs?limit=100`);
       const result = await response.json();
       if (result.jobs) {
         set({
-          filteredData: result.jobs,
+          data: result.jobs,
           savedJobs: result.jobs.filter((job) => job.isBookMarked),
         });
+        console.log("Data", get().data);
       }
     } catch (error) {
       console.error("Error fetching job data:", error);
@@ -98,7 +95,7 @@ const useJobStore = create((set, get) => ({
   BookMark: (id, isBookMarked) => {
     set((state) => {
       const newData = state.data.map((job) =>
-        job.id === id ? { ...job, isBookMarked: !isBookMarked } : job,
+        job.id === id ? { ...job, isBookMarked: !isBookMarked } : job
       );
       const savedJobs = isBookMarked
         ? state.savedJobs.filter((job) => job.id !== id)
@@ -115,28 +112,44 @@ const useJobStore = create((set, get) => ({
     });
   },
 
-  applyFilterWithPagination: () => {
-    const { filters, originalData, page } = get();
-    set({ isFiltered: true });
+  getJobById: async (id) => {
+    await get().fetchAllJobs();
+    console.log(get().data.find((job) => job._id === id));
+    return get().data.find((job) => job._id === id);
+  },
 
-    if (!originalData || !Array.isArray(originalData)) {
-      console.error("originalData is not defined or not an array");
-      return;
+  checkIsFiltered: () => {
+    const unfiltered = {
+      selectedTypes: [],
+      salaryRange: { min: 35000, max: 200000 },
+      searchQuery: "",
+      currency: "All",
+      location: "",
+      experienceLevel: "All",
+    };
+    if (!_.isEqual(get().filters, unfiltered)) {
+      set({ isFiltered: true });
+    } else {
+      set({ isFiltered: false });
     }
+  },
 
-    let filtered = [...originalData];
+  applyFilterWithPagination: ()  => {
+    get().fetchAllJobs();
+    const { filters, data, page } = get();
 
-    // Apply filters
+    let filtered = data;
+    console.log("Data", data);
     if (filters.selectedTypes.length > 0) {
       filtered = filtered.filter((job) =>
-        filters.selectedTypes.includes(job.type),
+        filters.selectedTypes.includes(job.type)
       );
     }
 
     if (filters.searchQuery.trim() !== "") {
       const lowerCaseQuery = filters.searchQuery.toLowerCase();
       filtered = filtered.filter((job) =>
-        job.title.toLowerCase().includes(lowerCaseQuery),
+        job.title.toLowerCase().includes(lowerCaseQuery)
       );
     }
 
@@ -146,32 +159,28 @@ const useJobStore = create((set, get) => ({
 
     if (filters.location.trim() !== "") {
       filtered = filtered.filter((job) =>
-        job.location.toUpperCase().includes(filters.location.toUpperCase()),
+        job.location.toUpperCase().includes(filters.location.toUpperCase())
       );
     }
 
     if (filters.experienceLevel !== "All") {
       filtered = filtered.filter(
-        (job) => job.experienceLevel === filters.experienceLevel,
+        (job) => job.experienceLevel === filters.experienceLevel
       );
     }
+   
 
-    // Debugging
-    console.log("Filtered Jobs:", filtered);
-    console.log("Current Page:", page);
-
-    // Pagination Logic
     const jobsPerPage = 4;
-    const totalPages = Math.ceil(filtered.length / jobsPerPage);
+    const totalJobs = Math.ceil(filtered.length / jobsPerPage);
     const startIndex = (page - 1) * jobsPerPage;
     const paginatedJobs = filtered.slice(startIndex, startIndex + jobsPerPage);
-
-    console.log("Jobs on this page:", paginatedJobs);
-    console.log("Total Pages:", totalPages);
-
-    set({ filteredData: paginatedJobs, totalPages });
+    set({ filteredData: paginatedJobs, totalJobs });
+    console.log("filteredData", get().filteredData);
+    console.log("totalJobs", get().totalJobs);
+    console.log("page", get().page);
+    console.log("originalData", get().originalData);
+    console.log("filtered", filtered);
   },
-
   resetFilters: () => {
     set({
       filters: {

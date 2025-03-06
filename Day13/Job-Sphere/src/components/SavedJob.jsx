@@ -12,7 +12,7 @@ const SavedJob = () => {
         {savedJobs && savedJobs.length > 0 ? (
           savedJobs.map((job) => (
             <div
-              key={job.id}
+              key={job._id}
               className=" w-full h-fit flex gap-4  shadow-md border-1 border-[#87878766] rounded-2xl p-4 relative"
             >
               <button

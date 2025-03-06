@@ -5,11 +5,24 @@ import SearchBar from "./SearchBar";
 import Pagination from "./Pagination";
 import useJobStore from "./store/DataStore";
 import AD from "./AD";
+import { useEffect } from "react";
 const Job_search = () => {
-  const jobs = useJobStore((state) =>
-    state.isFiltered ? state.filteredData : state.originalData,
-  );
+  const originalData = useJobStore((state) => state.originalData);
+  const filteredData = useJobStore((state) => state.filteredData);
   const BookMark = useJobStore((state) => state.BookMark);
+  const checkIsFiltered = useJobStore((state) => state.checkIsFiltered);
+  const filters = useJobStore((state) => state.filters);
+  const isFilterd = useJobStore((state) => state.isFiltered);
+  const jobs = isFilterd ? filteredData : originalData;
+  
+
+  useEffect(() => {
+    console.log("Count changed:", isFilterd);
+  }, [isFilterd]);
+
+  useEffect(() => {
+    checkIsFiltered();
+  }, [checkIsFiltered, filters]);
   
 
   return (
@@ -22,17 +35,9 @@ const Job_search = () => {
           {jobs.map((job) => {
             return (
               <Jobs
-                key={job.id}
-                id={job.id}
-                Logo={job.logo || "https://via.placeholder.com/150"}
-                title={job.title}
-                company={job.company}
-                location={job.location}
-                Type={job.type}
-                isBookMarked={job.isBookMarked}
+                Job={job}
                 BookMark={BookMark}
-                description={job.description}
-                Salary={job.salary}
+                key={job._id}
               />
             );
           })}

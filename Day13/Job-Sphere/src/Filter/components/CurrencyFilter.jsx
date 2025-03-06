@@ -2,12 +2,10 @@ import useJobStore from "../../components/store/DataStore";
 
 const CurrencyFilter = () => {
   const { setCurrency } = useJobStore();
-  const currency = useJobStore((state) => state.filters.currency); // Use Zustand state directly
+  const currency = useJobStore((state) => state.filters.currency);
 
   const handleChange = (e) => {
-    const newCurrency = e.target.value; // Get the selected value
-
-    setCurrency(newCurrency);
+    setCurrency(e.target.value);
   };
 
   return (

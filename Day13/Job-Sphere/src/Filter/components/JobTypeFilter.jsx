@@ -1,23 +1,19 @@
-import { useState } from "react";
 import useJobStore from "../../components/store/DataStore";
 
 const JobTypeFilter = () => {
   const { setSelectedTypes } = useJobStore();
   const JobTypeFilter = useJobStore((state) => state.filters.selectedTypes);
-  const [selectedTypes, setSelectedTypess] = useState([]);
+  
 
   const handleCheckboxClick = (type) => {
     let updatedTypes = [];
 
-    if (selectedTypes.includes(type)) {
-      updatedTypes = selectedTypes.filter((t) => t !== type);
+    if (JobTypeFilter.includes(type)) {
+      updatedTypes = JobTypeFilter.filter((t) => t !== type);
     } else {
-      updatedTypes = [...selectedTypes, type];
+      updatedTypes = [...JobTypeFilter, type];
     }
-
-    setSelectedTypess(updatedTypes);
     setSelectedTypes(updatedTypes);
-    console.log("selectedTypes", JobTypeFilter);
   };
 
   return (
@@ -36,7 +32,7 @@ const JobTypeFilter = () => {
             <input
               type="checkbox"
               id={type}
-              checked={selectedTypes.includes(type)}
+              checked={JobTypeFilter.includes(type)}
               onChange={() => handleCheckboxClick(type)}
             />
             <label htmlFor={type}>{type}</label>

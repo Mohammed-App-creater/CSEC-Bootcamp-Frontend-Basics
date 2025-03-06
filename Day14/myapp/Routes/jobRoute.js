@@ -1,9 +1,11 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
-const { Job } = require('../Model/jobModel');
-const { validateJob } = require('../Validation/jobValidation');
 const { createJob, getJobs } = require('../controllers/jobController');
+const jobValidator = require('../middleware/validator'); 
 
-router.route('/') 
-    .get( validateJob, getJobs)
-    .post( validateJob, createJob);
+
+router.route('/')
+    .get(getJobs)
+    .post(jobValidator, createJob); 
+    
+module.exports = router;

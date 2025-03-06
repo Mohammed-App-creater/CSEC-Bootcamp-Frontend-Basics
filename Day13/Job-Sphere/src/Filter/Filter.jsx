@@ -4,19 +4,10 @@ import LocationFilter from "./components/LocationFilter";
 import ExperienceFilter from "./components/ExperienceFilter";
 import SalaryFilter from "./components/SalaryFilter";
 import CurrencyFilter from "./components/CurrencyFilter";
-import { useState, useEffect, useCallback } from "react";
+import useJobStore from "../components/store/DataStore";
 
 const Filter = () => {
-  const [reset, setReset] = useState(false);
-  const handleReset = useCallback(() => {
-    setReset(true);
-  }, []);
-
-  useEffect(() => {
-    if (reset) {
-      setReset(false);
-    }
-  }, [reset]);
+ const reset = useJobStore((state) => state.resetFilters);
 
   return (
     <section className="  h-fit flex justify-center items-center p-4">
@@ -29,7 +20,7 @@ const Filter = () => {
         <SalaryFilter Reset={reset} />
         <CurrencyFilter Reset={reset} />
         <button
-          onClick={handleReset}
+          onClick={reset}
           className=" w-[80%] bg-[#0034D1] text-white p-2 rounded-lg mt-4"
         >
           Reset all Filters

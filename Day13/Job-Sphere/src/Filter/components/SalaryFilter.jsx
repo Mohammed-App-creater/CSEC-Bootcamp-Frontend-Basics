@@ -5,8 +5,9 @@ import "./Salary.css";
 
 const SalaryFilter = () => {
   const { setSalaryRange } = useJobStore();
-  const [min, setMin] = useState(35000);
-  const [max, setMax] = useState(200000);
+  const salaryRange = useJobStore((state) => state.filters.salaryRange);
+  const [min, setMin] = useState(salaryRange.min);
+  const [max, setMax] = useState(salaryRange.max);
   const [value, setValue] = useState([min, max]);
   const minLimit = 200;
   const maxLimit = 500_000;

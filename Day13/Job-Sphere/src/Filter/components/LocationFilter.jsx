@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CiLocationOn } from "react-icons/ci";
 import useJobStore from "../../components/store/DataStore";
 
-import PropTypes from "prop-types";
 
-const LocationFilter = ({ Reset }) => {
+
+const LocationFilter = () => {
   const { setLocation } = useJobStore();
-  const [inputValue, setInputValue] = useState("");
+  const location = useJobStore((state) => state.filters.location);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
 
   const locationSuggestions = [
@@ -14,6 +14,7 @@ const LocationFilter = ({ Reset }) => {
     "London, UK",
     "Addis Ababa, Ethiopia",
     "Berlin, Germany",
+    "San Francisco, USA",
     "Toronto, Canada",
     "Paris, France",
     "Tokyo, Japan",
@@ -21,8 +22,6 @@ const LocationFilter = ({ Reset }) => {
   ];
   const handleInputChange = (e) => {
     const value = e.target.value;
-    setInputValue(value);
-
     if (value) {
       setFilteredSuggestions(
         locationSuggestions.filter((loc) =>
@@ -37,17 +36,9 @@ const LocationFilter = ({ Reset }) => {
   };
 
   const handleSelectSuggestion = (suggestion) => {
-    setInputValue(suggestion);
     setFilteredSuggestions([]);
     setLocation(suggestion);
   };
-
-  useEffect(() => {
-    if (Reset) {
-      setInputValue("");
-      setFilteredSuggestions([]);
-    }
-  }, [Reset]);
 
   return (
     <div className="w-full relative">
@@ -56,7 +47,7 @@ const LocationFilter = ({ Reset }) => {
         <CiLocationOn className="text-2xl text-[#2F2F2F]" />
         <input
           type="text"
-          value={inputValue}
+          value={location}
           placeholder="Enter location"
           onChange={handleInputChange}
           className="w-full outline-none text-[#2F2F2F] bg-transparent"
@@ -80,8 +71,5 @@ const LocationFilter = ({ Reset }) => {
   );
 };
 
-LocationFilter.propTypes = {
-  Reset: PropTypes.bool.isRequired,
-};
 
 export default LocationFilter;
