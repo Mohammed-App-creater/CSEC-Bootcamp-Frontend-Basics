@@ -7,9 +7,13 @@ import { ErrorMessage, Formik, Field } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useRegisterStore from "./Store/authStore";
 
 const Login = () => {
-  const [loading, setLoading] = useState(false);
+  const { Login, LoginValue } = useRegisterStore();
+  const isLoading = useRegisterStore((state) => state.isLoading);
+  const errorMass = useRegisterStore((state) => state.errorMass);
+  const [error, setError] = useState(false);
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string().required("Password is required"),
@@ -32,13 +36,17 @@ const Login = () => {
           <Formik
             initialValues={{ email: "", password: "" }}
             validationSchema={validationSchema}
-            onSubmit={(values) => {
-              console.log(values);
-              setLoading(true);
-              setTimeout(() => {
-                console.log("Form Submitted:", values);
-                setLoading(false);
-              }, 2000);
+            onSubmit={async (values) => {
+              LoginValue(values);
+              const didRegister = await Login();
+              if (didRegister) {
+                localStorage.setItem("LoggedIn", true);
+                navigator("/");
+              } else {
+                setError(true);
+                values.password = "";
+                values.confirmPassword = "";
+              }
             }}
           >
             {({ handleSubmit, errors, touched }) => (
@@ -46,6 +54,9 @@ const Login = () => {
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-9 mt-4 "
               >
+                {error ? (
+                  <h1 className="text-xl text-red-500">{errorMass}</h1>
+                ) : null}
                 <div className="relative">
                   <CiMail size={24} className="absolute top-3 left-2" />
                   <Field
@@ -89,10 +100,10 @@ const Login = () => {
                 <button
                   type="submit"
                   className={`w-[400px] p-2 bg-[#0034D1] ${
-                    loading ? "bg-[#698cf4] animate-pulse" : null
+                    isLoading ? "bg-[#698cf4] animate-pulse" : null
                   } rounded-lg text-white text-2xl font-semibold cursor-pointer`}
                 >
-                  {loading ? "Loading..." : "Login"}
+                  {isLoading ? "Loading..." : "Login"}
                 </button>
               </form>
             )}

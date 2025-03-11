@@ -5,7 +5,6 @@ const jobSeekerValidator = [
     body('lastName').isString().notEmpty(),
     body('email').isEmail().notEmpty(),
     body('password').isString().notEmpty(),
-    body('phone').isString().notEmpty()
 ];
 
 const loginValidator = [

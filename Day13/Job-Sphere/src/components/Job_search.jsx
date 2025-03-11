@@ -14,11 +14,6 @@ const Job_search = () => {
   const filters = useJobStore((state) => state.filters);
   const isFilterd = useJobStore((state) => state.isFiltered);
   const jobs = isFilterd ? filteredData : originalData;
-  
-
-  useEffect(() => {
-    console.log("Count changed:", isFilterd);
-  }, [isFilterd]);
 
   useEffect(() => {
     checkIsFiltered();

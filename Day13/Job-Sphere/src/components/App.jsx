@@ -7,13 +7,14 @@ import DiscriptionPage from "../discription/DiscriptionPage";
 import useJobStore from "./store/DataStore.js"; // Import Zustand store
 import { useEffect } from "react";
 import { JobPosting } from "./JobPosting.jsx";
+import ProtactedRouet from "./ProtectedRouet";
+import Roles from "../Authentication/Roles.jsx";
+import CompanySignup from "../Authentication/CompanySignUp.jsx";
+import CompanyProfile from "../Authentication/CompanyProfile.jsx";
 
 function App() {
   const fetchJobs = useJobStore((state) => state.fetchJobs);
   const fetchAllJobs = useJobStore((state) => state.fetchAllJobs);
-  
-
-
 
   useEffect(() => {
     fetchJobs();
@@ -24,10 +25,27 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/roles" element={<Roles />} />
+        <Route path="/CompanySignup" element={<CompanySignup />} />
+        <Route path="/CompanyProfile" element={<CompanyProfile />} />
         <Route path="/" element={<NavBar />}>
-          <Route path="/jobposting" element={<JobPosting />} />
+          <Route
+            path="/jobposting"
+            element={
+              <ProtactedRouet>
+                <JobPosting />
+              </ProtactedRouet>
+            }
+          />
           <Route index element={<Job_search />} />
-          <Route path="/description" element={<DiscriptionPage />} />
+          <Route
+            path="/description"
+            element={
+              <ProtactedRouet>
+                <DiscriptionPage />
+              </ProtactedRouet>
+            }
+          />
         </Route>
       </Routes>
     </Router>

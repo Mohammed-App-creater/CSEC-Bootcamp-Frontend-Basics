@@ -7,8 +7,15 @@ import Auth from "../components/Auth";
 import { ErrorMessage, Formik, Field } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import useRegisterStore from "./Store/registerStore";
+import { useState } from "react";
+
 
 const Signup = () => {
+  const { register, registerValue } = useRegisterStore();
+  const isLoading = useRegisterStore((state) => state.isLoading);
+  const errorMass = useRegisterStore((state) => state.errorMass);
+  const [error, setError] = useState(false);
   const validationSchema = Yup.object({
     firstName: Yup.string().required("First Name is required"),
     lastName: Yup.string().required("Last Name is required"),
@@ -18,6 +25,7 @@ const Signup = () => {
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
   });
+
 
   const navigate = useNavigate();
 
@@ -36,9 +44,16 @@ const Signup = () => {
               confirmPassword: "",
             }}
             validationSchema={validationSchema}
-            onSubmit={(values) => {
-              console.log(values);
-              // Handle form submission
+            onSubmit={async (values) => {
+              registerValue(values);
+              const didRegister = await register();
+              if (didRegister) {
+                navigate("/");
+              } else {
+                setError(true);
+                values.password = "";
+                values.confirmPassword = "";
+              }
             }}
           >
             {({ handleSubmit, errors, touched }) => (
@@ -46,12 +61,17 @@ const Signup = () => {
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-4 mt-4"
               >
+                {error ? (
+                  <h1 className="text-xl text-red-500">{errorMass}</h1>
+                ) : null}
+
                 <div className="relative">
                   <img
                     src={user}
                     alt="user"
                     className="w-6 h-6 absolute top-3 left-2"
                   />
+
                   <Field
                     type="text"
                     name="firstName"
@@ -156,7 +176,7 @@ const Signup = () => {
                   type="submit"
                   className="w-[400px] p-2 bg-[#0034D1] rounded-lg text-white text-2xl font-semibold cursor-pointer"
                 >
-                  Create account
+                  {isLoading ? "Working on it..." : "Create account"}
                 </button>
               </form>
             )}
