@@ -13,7 +13,6 @@ const refreshToken = async (req, res, ) => {
   }
   try {
     const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
-    console.log("v f");
     const jobSeeker = await JobSeeker.findOne({ _id: decoded.id });
     if (!jobSeeker) {
       return res.status(404).send("User not found");

@@ -9,6 +9,9 @@ const corsOptions = require("./config/corsOptions.js");
 const credentials = require("./middleware/credentials.js");
 const loggerRoute = require("./Routes/logerRoute.js");
 const verifyJWT = require("./middleware/verifyJWT.js");
+const path = require('path');
+const uploadRoutes = require('./Routes/uploadRoute');
+const uploadController = require("./controllers/uploadContoller");
 
 dotenv.config();
 const app = express();
@@ -20,19 +23,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
+app.use('/Logo', express.static(path.join(__dirname, './View/Logo')));
 
-
-app.use('/api/jobs', jobRoute);
+app.use('/upload', uploadRoutes);
 app.use('/auth', authRoute);
+app.use('/api/jobs', jobRoute);
 app.use('/refresh', refreshTokenRoute);
 app.get('/test', verifyJWT, (req, res) => {
   res.send('Welcome to Job Board API JWT');
 });
-
 app.get('/', (req, res) => {
   res.send('Welcome to Job Board API');
 });
-
+app.use(uploadController.handleError);
 (async () => {
     await connectDB();
     app.listen(port, () => {

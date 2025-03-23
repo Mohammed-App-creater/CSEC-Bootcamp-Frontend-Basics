@@ -1,19 +1,15 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import useCompanyAuthStore from "./Store/CompanyAuthStore.js";
+import ErrorAlert from "./popDown.jsx";
+import Button from "./Button.jsx";
 
 const CompanySignup = () => {
   const [step, setStep] = useState(1);
+  const { setValue, register, Company, errorMessage } = useCompanyAuthStore();
 
-  const initialValues = {
-    companyName: "",
-    industry: "",
-    location: "",
-    contactPersonName: "",
-    contactEmail: "",
-    password: "",
-    confirmPassword: "",
-  };
+  const initialValues = Company;
 
   const validationSchemas = [
     Yup.object({
@@ -22,11 +18,21 @@ const CompanySignup = () => {
       location: Yup.string().required("Location is required"),
     }),
     Yup.object({
-      contactPersonName: Yup.string().required("Contact person name is required"),
-      contactEmail: Yup.string().email("Invalid email format").required("Email is required"),
+      contactPersonName: Yup.string().required(
+        "Contact person name is required"
+      ),
+      contactEmail: Yup.string()
+        .email("Invalid email format")
+        .required("Email is required"),
+      contactPhone: Yup.string().required("Phone number is required"),
     }),
     Yup.object({
-      password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+      companyEmail: Yup.string()
+        .email("Invalid email format")
+        .required("Email is required"),
+      password: Yup.string()
+        .min(6, "Password must be at least 6 characters")
+        .required("Password is required"),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("password"), null], "Passwords must match")
         .required("Confirm your password"),
@@ -35,7 +41,8 @@ const CompanySignup = () => {
 
   const handleSubmit = (values) => {
     console.log("Company Signup Data:", values);
-    // Submit logic here
+    setValue(values);
+    register();
   };
 
   const nextStep = async (validateForm) => {
@@ -58,6 +65,13 @@ const CompanySignup = () => {
         >
           {({ validateForm }) => (
             <Form className="space-y-4">
+              {errorMessage && (
+                <ErrorAlert
+                  message={errorMessage}
+                  show={true}
+                  onClose={() => false}
+                />
+              )}
               {step === 1 && (
                 <>
                   <Field
@@ -65,21 +79,33 @@ const CompanySignup = () => {
                     placeholder="Company Name"
                     className="w-full p-3 border-1 border-[#0034D1] rounded focus:outline-none focus:ring-2 focus:ring-[#0034D1]"
                   />
-                  <ErrorMessage name="companyName" component="div" className="text-red-500 text-sm" />
+                  <ErrorMessage
+                    name="companyName"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
 
                   <Field
                     name="industry"
                     placeholder="Industry"
                     className="w-full p-3 border-1 border-[#0034D1] rounded focus:outline-none focus:ring-2 focus:ring-[#0034D1]"
                   />
-                  <ErrorMessage name="industry" component="div" className="text-red-500 text-sm" />
+                  <ErrorMessage
+                    name="industry"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
 
                   <Field
                     name="location"
                     placeholder="Location"
                     className="w-full p-3 border-1 border-[#0034D1] rounded focus:outline-none focus:ring-2 focus:ring-[#0034D1]"
                   />
-                  <ErrorMessage name="location" component="div" className="text-red-500 text-sm" />
+                  <ErrorMessage
+                    name="location"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
                 </>
               )}
 
@@ -90,7 +116,11 @@ const CompanySignup = () => {
                     placeholder="Contact Person Name"
                     className="w-full p-3 border-1 border-[#0034D1] rounded focus:outline-none focus:ring-2 focus:ring-[#0034D1]"
                   />
-                  <ErrorMessage name="contactPersonName" component="div" className="text-red-500 text-sm" />
+                  <ErrorMessage
+                    name="contactPersonName"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
 
                   <Field
                     name="contactEmail"
@@ -98,19 +128,51 @@ const CompanySignup = () => {
                     type="email"
                     className="w-full p-3 border-1 border-[#0034D1] rounded focus:outline-none focus:ring-2 focus:ring-[#0034D1]"
                   />
-                  <ErrorMessage name="contactEmail" component="div" className="text-red-500 text-sm" />
+                  <ErrorMessage
+                    name="contactEmail"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
+
+                  <Field
+                    name="contactPhone"
+                    placeholder="Contact Phone"
+                    type="tel"
+                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                    className="w-full p-3 border-1 border-[#0034D1] rounded focus:outline-none focus:ring-2 focus:ring-[#0034D1]"
+                  />
+                  <ErrorMessage
+                    name="contactPhone"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
                 </>
               )}
 
               {step === 3 && (
                 <>
                   <Field
+                    name="companyEmail"
+                    placeholder="Company Email"
+                    type="email"
+                    className="w-full p-3 border-1 border-[#0034D1] rounded focus:outline-none focus:ring-2 focus:ring-[#0034D1]"
+                  />
+                  <ErrorMessage
+                    name="companyEmail"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
+                  <Field
                     name="password"
                     placeholder="Password"
                     type="password"
                     className="w-full p-3 border-1 border-[#0034D1] rounded focus:outline-none focus:ring-2 focus:ring-[#0034D1]"
                   />
-                  <ErrorMessage name="password" component="div" className="text-red-500 text-sm" />
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
 
                   <Field
                     name="confirmPassword"
@@ -118,13 +180,21 @@ const CompanySignup = () => {
                     type="password"
                     className="w-full p-3 border-1 border-[#0034D1] rounded focus:outline-none focus:ring-2 focus:ring-[#0034D1]"
                   />
-                  <ErrorMessage name="confirmPassword" component="div" className="text-red-500 text-sm" />
+                  <ErrorMessage
+                    name="confirmPassword"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
                 </>
               )}
 
               <div className="flex justify-between">
                 {step > 1 && (
-                  <button type="button" onClick={prevStep} className="py-2 px-4 bg-gray-300 rounded">
+                  <button
+                    type="button"
+                    onClick={prevStep}
+                    className="py-2 px-4 bg-gray-300 rounded"
+                  >
                     Back
                   </button>
                 )}
@@ -137,14 +207,7 @@ const CompanySignup = () => {
                     Next
                   </button>
                 )}
-                {step === 3 && (
-                  <button
-                    type="submit"
-                    className="py-2 px-8 bg-[#0034D1] text-white rounded"
-                  >
-                    Submit
-                  </button>
-                )}
+                {step === 3 && <Button />}
               </div>
             </Form>
           )}
@@ -152,7 +215,6 @@ const CompanySignup = () => {
       </div>
     </section>
   );
-}
-
+};
 
 export default CompanySignup;

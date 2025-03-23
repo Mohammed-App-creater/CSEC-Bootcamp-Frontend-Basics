@@ -8,17 +8,45 @@ import * as Yup from "yup";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useRegisterStore from "./Store/authStore";
+import LoginSelector from "./LoginSelector";
+import useCompanyAuthStore from "./Store/CompanyAuthStore.js";
 
 const Login = () => {
   const { Login, LoginValue } = useRegisterStore();
-  const isLoading = useRegisterStore((state) => state.isLoading);
+  const isloading = useRegisterStore((state) => state.isLoading);
   const errorMass = useRegisterStore((state) => state.errorMass);
   const [error, setError] = useState(false);
+  const [ role, setRole ] = useState("");
+  const { loginValue, login, errorMessage, isLoading } = useCompanyAuthStore();
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string().required("Password is required"),
   });
   const navigator = useNavigate();
+
+  const HandleSubmit = async (values) => {
+    if (role === "Jobseeker") {
+    LoginValue(values);
+    const didRegister = await Login();
+    if (didRegister) {
+      localStorage.setItem("LoggedIn", true);
+      navigator("/");
+    } else {
+      setError(true);
+      values.password = "";
+    }
+  }else if (role === "Company") {
+    loginValue(values);
+    const didLogin = await login();
+    if (didLogin) {
+      localStorage.setItem("LoggedIn", true);
+      navigator("/");
+    } else {
+      setError(true);
+      values.password = "";
+    }
+  };
+  };
 
   return (
     <section className=" w-screen h-screen flex  ">
@@ -36,18 +64,7 @@ const Login = () => {
           <Formik
             initialValues={{ email: "", password: "" }}
             validationSchema={validationSchema}
-            onSubmit={async (values) => {
-              LoginValue(values);
-              const didRegister = await Login();
-              if (didRegister) {
-                localStorage.setItem("LoggedIn", true);
-                navigator("/");
-              } else {
-                setError(true);
-                values.password = "";
-                values.confirmPassword = "";
-              }
-            }}
+            onSubmit={HandleSubmit}
           >
             {({ handleSubmit, errors, touched }) => (
               <form
@@ -55,7 +72,7 @@ const Login = () => {
                 className="flex flex-col gap-9 mt-4 "
               >
                 {error ? (
-                  <h1 className="text-xl text-red-500">{errorMass}</h1>
+                  <h1 className="text-xl text-red-500">{errorMass || errorMessage}</h1>
                 ) : null}
                 <div className="relative">
                   <CiMail size={24} className="absolute top-3 left-2" />
@@ -97,13 +114,14 @@ const Login = () => {
                     className="text-red-500"
                   />
                 </div>
+                <LoginSelector setRole={setRole} />
                 <button
                   type="submit"
                   className={`w-[400px] p-2 bg-[#0034D1] ${
-                    isLoading ? "bg-[#698cf4] animate-pulse" : null
+                    isLoading || isloading  ? "bg-[#698cf4] animate-pulse" : null
                   } rounded-lg text-white text-2xl font-semibold cursor-pointer`}
                 >
-                  {isLoading ? "Loading..." : "Login"}
+                  {isLoading || isloading ? "Loading..." : "Login"}
                 </button>
               </form>
             )}
